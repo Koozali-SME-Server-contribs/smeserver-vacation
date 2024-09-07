@@ -1,0 +1,55 @@
+<div id='vac_add'>
+
+   % my $btn = l('ADD');
+    
+   % if ($config->{debug} == 1) {
+	<p>
+	  %= dumper $c->current_route
+	  %= dumper $EmailVacation
+	</p>
+    % }
+     
+    %= form_for '/Uservacations2' => (method => 'POST') => begin
+
+			<span class=label>
+				%=l 'ACCOUNT'
+			</span><span class=data>
+				%= $account
+			</span><br>
+			<span class=label>
+				%=l 'USER_NAME'
+			</span><span class=data>
+				%=$username
+			</span><br>
+			<span class=label>
+				%=$c->render_to_string(inline =>$c->l('vac_VACATION_FROM1'))
+			</span>
+			<span class=data>
+				%=date_field 'EmailVacationFrom' =>$EmailVacationFrom
+			</span><br>
+			<span class=label>
+				%=$c->render_to_string(inline =>$c->l('vac_VACATION_TO1'))
+			</span>
+			<span class=data>
+				%=date_field 'EmailVacationTo' =>$EmailVacationTo
+			</span><br>
+			<span class=label>
+				%=l 'vac_MESSAGE'
+			</span>
+			<span class=data>		
+				% $VacText = b("$VacText");	
+				%=text_area 'VacText' => $VacText, cols=>40, rows=>15
+			</span><br>
+			<span class=label>
+				%=l 'vac_VACATION_STATUS'
+			</span>
+			<span class=data>
+				% param EmailVacation => "$EmailVacation";
+				%=select_field  EmailVacation =>[['Yes'=>'yes'],['No'=>'no']]
+			</span><br>
+   		     %= hidden_field 'account' => $account
+
+		%= submit_button "$btn", class => 'action'
+	%end
+
+</div>

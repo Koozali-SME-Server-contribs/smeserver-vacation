@@ -1,0 +1,62 @@
+<lexicon lang="fr">
+    <entry>
+      <base>User vacations</base>
+      <trans>Utilisateurs absents</trans>
+    </entry>
+    <entry>
+      <base>Vacation Message</base>
+      <trans>Message d'absence</trans>
+    </entry>
+    <entry>
+      <base>FORM_TITLE</base>
+      <trans>Modifier les messages d'absence des utilisateurs</trans>
+    </entry>
+    <entry>
+      <base>DESCRIPTION</base>
+      <trans>Vous pouvez modifier le message d'absence d'un utilisateur en cliquant sur le lien correspondant à côté de son nom.</trans>
+    </entry>
+    <entry>
+      <base>LABEL_VACATION</base>
+      <trans>Absent(e)</trans>
+    </entry>
+    <entry>
+      <base>MODIFY_DESCRIPTION</base>
+      <trans><![CDATA[ <p> Tapez votre message d'absence ici. Vous pouvez utiliser à votre guise dans ce message le terme "$SUBJECT" : il sera remplacé dans la réponse automatique par le sujet du courriel auquel il fait référence. </p> <p> Ce message doit être composé de deux parties séparées par une ligne vide. La première sera intégrée aux en-têtes du courriel de réponse ; vous devez donc vous assurer de laisser au moins une ligne vide avant de taper votre message d'absence. </p> <p> Par défaut, l'adresse de courriel de l'utilisateur sera celle du domaine principal, mais vous pouvez la redéfinir avec un domaine virtuel en remplaçant la partie de domaine de l'adresse de l'expéditeur dans la première ligne du message, avec le nom de domaine virtuel (par exemple remplacer le défaut "From: user@primary.domain" avec "From: user@virtual.domain"). Pour revenir au message d'absence par défaut, tapez "reset". </p><p> Vous pouvez également remplir les champs  "Activer le message de vacance» et «Désactiver le message de vacances afin d'activer et désactiver automatiquement l'envoi du message d'absence pour ce compte utilisateur aux dates indiquées. </p> <p> Le format utilisé est AAAAMMJJ (quatre chiffres pour l'année, deux chiffres pour le mois, deux chiffres pour le Jour) et les dates dans les deux champs ne doivent pas être les mêmes. Si vous souhaitez utiliser cette fonctionnalité, laissez la case "Activer le message de vacance" sur "Non, il sera automatiquement activé le jour de la date donnée.</p> </p> ]]></trans>
+    </entry>
+    <entry>
+      <base>VACATION_FROM</base>
+      <trans>Activer le message d'absence le (AAAAMMJJ)</trans>
+    </entry>
+    <entry>
+      <base>VACATION_TO</base>
+      <trans>Désctiver le message d'absence le (AAAAMMJJ)</trans>
+    </entry>
+    <entry>
+      <base>MESSAGE</base>
+      <trans>Message d'absence</trans>
+    </entry>
+    <entry>
+      <base>VACATION_STATUS</base>
+      <trans>Activer le message d'absence</trans>
+    </entry>
+    <entry>
+      <base>FROM</base>
+      <trans>De:</trans>
+    </entry>
+    <!-- this is read into a ~/.vacation.msg verbatim
+    leave a blank line after the subject line but not before, 
+    and don't translate $SUBJECT -->
+    <entry>
+      <base>AWAY_FROM_MAIL</base>
+      <trans>Je n'ai, pour l'instant, pas accès à ma messagerie. Je n'aurais connaissance qu'à mon retour de votre courriel concernant : $SUBJECT</trans>
+    </entry>
+    <entry>
+      <base>NO_USERS_IN_GRANTED_GROUPS</base>
+      <trans>Il n'y a aucun utilisateur dans le(s) groupe(s) que vous êtes autoriser à gérer.</trans>
+    </entry>
+    <entry>
+      <base>ANSWER_TO_OBJECT_SENDER</base>
+      <trans>Re: $SUBJECT - Je suis actuellement absent(e)</trans>
+    </entry>
+
+</lexicon>

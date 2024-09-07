@@ -1,0 +1,62 @@
+<lexicon lang="it">
+    <entry>
+      <base>User vacations</base>
+      <trans>Assenze utente</trans>
+    </entry>
+    <entry>
+      <base>Vacation Message</base>
+      <trans>Messaggio utente assente</trans>
+    </entry>
+    <entry>
+      <base>FORM_TITLE</base>
+      <trans>Modifica le impostazioni per utente assente</trans>
+    </entry>
+    <entry>
+      <base>DESCRIPTION</base>
+      <trans>Il messaggio per l'utente assente può essere modificato cliccando sul link a destra del nome.</trans>
+    </entry>
+    <entry>
+      <base>LABEL_VACATION</base>
+      <trans>Assente</trans>
+    </entry>
+    <entry>
+      <base>MODIFY_DESCRIPTION</base>
+      <trans><![CDATA[ <p> Inserire qui il messaggio utente assente. Si può utilizzare la variabile "$SUBJECT" in qualunque punto del messaggio per richiamare l'oggetto del messaggio che ha attivato l'auto-risposta. </p> <p> Il messaggio deve essere composto di due parti separate da una riga vuota. La prima parte sarà integrata nell'intestazione della risposta, perciò assicuratevi di lasciare una riga vuota prima del messaggio vero e proprio. </p> <p> Il dominio primario viene aggiunto automaticamente al messaggio, oppure è possibile inserire un dominio virtuale sostituendo la parte del dominio dell'indirizzo del mittente nella prima riga del messaggio con il nome di dominio virtuale (ad esempio, sostituire il predefinito "From: user@primary.domain" con "From: user@virtual.domain"). Per ripristinare il messaggio di utente assente al valore di default selezionare "reset". </p> <p> E' anche possibile compilare i campi "Abilita assenza il" e "Disabilita assenza il" al fine di attivare e disattivare l'invio del messaggio di assenza per questo account utente per le date indicate automaticamente. </p> <p> Il formato utilizzato è YYYYMMDD (4 numeri per l'anno (Y), due numeri per il mese (M) e due numeri per il giorno (D)) e le date nei due campi non possono essere le stesse. Se si vuole utilizzare questa funzionalità lasciare "Abilita messaggi di vacanza" impostato a "No", sarà automaticamente attivato in base alla data indicata. </p> </p> ]]></trans>
+    </entry>
+    <entry>
+      <base>VACATION_FROM</base>
+      <trans>Abilita messaggio utente assente il (YYYYMMDD)</trans>
+    </entry>
+    <entry>
+      <base>VACATION_TO</base>
+      <trans>Disabilita messaggio utente assente il (YYYYMMDD)</trans>
+    </entry>
+    <entry>
+      <base>MESSAGE</base>
+      <trans>Messagio utente assente</trans>
+    </entry>
+    <entry>
+      <base>VACATION_STATUS</base>
+      <trans>Abilita messaggio utente assente</trans>
+    </entry>
+    <entry>
+      <base>FROM</base>
+      <trans>Da:</trans>
+    </entry>
+    <!-- this is read into a ~/.vacation.msg verbatim
+    leave a blank line after the subject line but not before, 
+    and don't translate $SUBJECT -->
+    <entry>
+      <base>AWAY_FROM_MAIL</base>
+      <trans>Non potrò leggere la mia posta per un po' di tempo. Il vostro messaggio con oggetto $SUBJECT verrà letto al mio ritorno.</trans>
+    </entry>
+    <entry>
+      <base>NO_USERS_IN_GRANTED_GROUPS</base>
+      <trans>Non ci sono uenti nel gruppo(i) che vi è consentito gestire</trans>
+    </entry>
+    <entry>
+      <base>ANSWER_TO_OBJECT_SENDER</base>
+      <trans>Re: $SUBJECT - Non posso leggere la mia posta</trans>
+    </entry>
+
+</lexicon>

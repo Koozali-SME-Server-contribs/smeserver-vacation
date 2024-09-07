@@ -1,0 +1,62 @@
+<lexicon lang="nl">
+    <entry>
+      <base>User vacations</base>
+      <trans>Gebruiker afwezigheid</trans>
+    </entry>
+    <entry>
+      <base>Vacation Message</base>
+      <trans>Afwezigheidsbericht</trans>
+    </entry>
+    <entry>
+      <base>FORM_TITLE</base>
+      <trans>Verander gebruiker vakantie instellingen</trans>
+    </entry>
+    <entry>
+      <base>DESCRIPTION</base>
+      <trans>U kunt een gebruikers vakantie bericht wijzigen door op de koppeling te klikken rechts naast de betreffende naam hieronder.</trans>
+    </entry>
+    <entry>
+      <base>LABEL_VACATION</base>
+      <trans>Vakantie</trans>
+    </entry>
+    <entry>
+      <base>MODIFY_DESCRIPTION</base>
+      <trans><![CDATA[ <p> Voer uw afwezigheidsbericht hier in. U kunt "$SUBJECT" overal in de tekst gebruiken, het zal worden vervangen door de onderwerp regel van de e-mail welke deze automatische antwoord service heeft geactiveerd. </p> <p> Het bericht dient uit twee delen te bestaan, gescheiden door een lege regel. Het eerste deel wordt geïntegreerd in de kopregels van de antwoord e-mail, zorg er vervolgens voor dat er minimaal een lege regel aanwezig is voor dat het bericht wordt getypt. </p> <p> De primaire domeinnaam wordt automatisch toegevoegd aan het adres, of er kan een virtueel domein worden gebruikt door het vervangen van het domein gedeelte van het afzender adres in de eerste regel van het bericht met dit virtuele domein (bijv. de standaard "From: user@primary.domain" te vervangen door "From: user@virtual.domain"). Om het standaard afwezigheidsbericht te herstellen dient u "reset" in te typen. </ p> <p> U kunt ook de "Afwezigheids bericht aanzeten op" en "Afwezeigheids bericht uitzetten op" velden invullen om de vakantie boodschap automatisch aan en uit te zetten op de opgegegen datum's voor deze gebruikersaccount. </ p> <p> Het gebruikte formaat is JJJJMMDD (vier cijfers jaar, twee cijfers maand, twee cijfers voor de dag) en de datum in de twee velden mag niet hetzelfde zijn. Om deze functionaliteit te gebruiken, laat U de instelling "Vakantie berichten inschakelen" op "Nee" - het wordt automatisch geactiveerd op basis van de datum gegeven.</p> ]]></trans>
+    </entry>
+    <entry>
+      <base>VACATION_FROM</base>
+      <trans>Afwezigheids bericht aanzetten op (JJJJMMDD)</trans>
+    </entry>
+    <entry>
+      <base>VACATION_TO</base>
+      <trans>Afwezigheids bericht uitzetten op (JJJJMMDD)</trans>
+    </entry>
+    <entry>
+      <base>MESSAGE</base>
+      <trans>Afwezigheidsbericht</trans>
+    </entry>
+    <entry>
+      <base>VACATION_STATUS</base>
+      <trans>Afwezigheidsbericht activeren</trans>
+    </entry>
+    <entry>
+      <base>FROM</base>
+      <trans>Van:</trans>
+    </entry>
+    <!-- this is read into a ~/.vacation.msg verbatim
+    leave a blank line after the subject line but not before, 
+    and don't translate $SUBJECT -->
+    <entry>
+      <base>AWAY_FROM_MAIL</base>
+      <trans>Ik ben op het moment niet in staat uw e-mail betreffende $SUBJECT te lezen Zodra ik weer terug ben zal ik deze lezen.</trans>
+    </entry>
+    <entry>
+      <base>NO_USERS_IN_GRANTED_GROUPS</base>
+      <trans>In de toegestane management groepen zijn geen gebruikers</trans>
+    </entry>
+    <entry>
+      <base>ANSWER_TO_OBJECT_SENDER</base>
+      <trans>Re: $SUBJECT - Afwezigheidsbericht </trans>
+    </entry>
+
+</lexicon>

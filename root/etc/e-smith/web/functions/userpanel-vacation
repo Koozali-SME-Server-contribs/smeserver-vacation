@@ -1,0 +1,72 @@
+#!/usr/bin/perl -wT
+
+#----------------------------------------------------------------------
+# heading     : Your Settings
+# description : Vacation Message
+# longdesc    : create an autoresponse message
+# navigation  : 100 600
+#
+# Copyright (c) 2001 Daniel van Raay <danielvr@caa.org.au>
+# Modified (c) 2002,2006 Stephen Noble <stephen@dungog.net>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# uses the FormMagick Panel for uservacations 
+# but pulls username from $ENV{'REMOTE_USER'};
+# rather then being selected from a table
+#
+#----------------------------------------------------------------------
+
+use strict;
+use warnings;
+
+use esmith::FormMagick::Panel::uservacations;
+
+my $fm = esmith::FormMagick::Panel::uservacations->new();
+$fm->display();
+
+__DATA__
+<form title="FORM_TITLE"
+    header="/etc/e-smith/web/common/head.tmpl"
+    footer="/etc/e-smith/web/common/foot.tmpl">
+    
+    <page 
+        name="First"
+        pre-event="print_status_message()"
+        post-event="userpanel_change_settings()" >
+
+        <description>MODIFY_DESCRIPTION</description>
+
+        <field type="literal" id="User" value="get_panel_user()">
+            <label>ACCOUNT</label>
+        </field>
+
+        <field type="literal" id="FullName" value="get_full_name()">
+            <label>USER_NAME</label>
+        </field>
+
+       <field type="text" id="EmailVacationFrom" value="get_vacation_date_from()">
+               <label>VACATION_FROM</label>
+       </field>
+
+       <field type="text" id="EmailVacationTo" value="get_vacation_date_to()">
+               <label>VACATION_TO</label>
+       </field>
+
+        <subroutine src="userpanel_get_vacation_text()" />
+        
+        <field
+            type="select"
+            id="EmailVacation"
+            options="'no' => 'NO', 'yes' => 'YES'"
+            value="get_vacation_status()">
+            <label>VACATION_STATUS</label>
+        </field>
+        
+        <subroutine src="print_button('SAVE')" />
+    </page>
+     
+</form>

@@ -1,0 +1,15 @@
+{
+  if ($qmail{FilterOrder})
+  {
+
+    my $VacationDelay =  $qmail{VacationDelay}  || '';
+
+    if ($props{EmailVacation})
+    {
+      return "| /usr/local/bin/vacation -j $VacationDelay $USERNAME"
+         if ($props{EmailVacation} eq 'yes');
+    }
+
+    return '# Vacation Message not set'
+  }
+}

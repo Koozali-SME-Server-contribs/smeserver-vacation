@@ -1,0 +1,62 @@
+<lexicon lang="zh-tw">
+    <entry>
+      <base>User vacations</base>
+      <trans>使用者假期</trans>
+    </entry>
+    <entry>
+      <base>Vacation Message</base>
+      <trans>假期留言</trans>
+    </entry>
+    <entry>
+      <base>FORM_TITLE</base>
+      <trans>更改使用者假期設定</trans>
+    </entry>
+    <entry>
+      <base>DESCRIPTION</base>
+      <trans>您可以透過按下使用者右側連結改變使用者假期留言</trans>
+    </entry>
+    <entry>
+      <base>LABEL_VACATION</base>
+      <trans>假期</trans>
+    </entry>
+    <entry>
+      <base>MODIFY_DESCRIPTION</base>
+      <trans><![CDATA[ <p>請於此處輸入假期訊息。您可於文字中任意使用 "$SUBJECT" 以便取代主動回覆郵件中的主旨欄。 </p> <p> 此訊息由兩部分空白行組成。前面的部分將被整合到，您必須確認輸入訊息之前至少留一空白行。</p> <p>主域名將主動加入位址，或者您亦可手動輸入虛擬網域以取代寄件訊息第一行的位址之網域部分 (例如：以 "From: user@virtual.domain"取代預設值 "From: user@primary.domain" with) 。改變假期訊息回到預設值請按"reset"。</p> <p> 您亦可位使用者帳號給定的日期填入 "允許假期" 與 "關閉假期" 區域以自動允許與關閉來寄出假期訊息。</p> <p> 使用的格式為 YYYYMMDD (4位數年，2位數月，2位數日) 而且該兩區域的日期必需不同。倘若您想使用此功能，讓 "允許假期留言" 設定為 "不要" - 它將基於給定的日期自動啟用。</p> </p> ]]></trans>
+    </entry>
+    <entry>
+      <base>VACATION_FROM</base>
+      <trans>允許假期 (YYYYMMDD)</trans>
+    </entry>
+    <entry>
+      <base>VACATION_TO</base>
+      <trans>關閉假期 (YYYYMMDD)</trans>
+    </entry>
+    <entry>
+      <base>MESSAGE</base>
+      <trans>假期留言</trans>
+    </entry>
+    <entry>
+      <base>VACATION_STATUS</base>
+      <trans>允許假期留言</trans>
+    </entry>
+    <entry>
+      <base>FROM</base>
+      <trans>從：</trans>
+    </entry>
+    <!-- this is read into a ~/.vacation.msg verbatim
+    leave a blank line after the subject line but not before, 
+    and don't translate $SUBJECT -->
+    <entry>
+      <base>AWAY_FROM_MAIL</base>
+      <trans>我暫時無法讀取我的電郵。當我回來後，您的郵件  $SUBJECT  將被讀取。</trans>
+    </entry>
+    <entry>
+      <base>NO_USERS_IN_GRANTED_GROUPS</base>
+      <trans>There are no users in the group(s) that you are granted to manage.</trans>
+    </entry>
+    <entry>
+      <base>ANSWER_TO_OBJECT_SENDER</base>
+      <trans>Re: $SUBJECT - Away from my email</trans>
+    </entry>
+
+</lexicon>

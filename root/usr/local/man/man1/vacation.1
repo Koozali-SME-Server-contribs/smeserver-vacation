@@ -1,0 +1,585 @@
+.\"
+.\" $Id: vacation.1,v 1.3 1999/01/04 04:28:02 psamuel Exp $
+.\"
+.TH vacation 1 "23 Sep 1998"
+.SH NAME
+vacation \- reply to mail automatically
+.SH SYNOPSIS
+.B vacation
+.br
+.B vacation
+.RI [ -I ]
+.br
+.B vacation
+.RI [ -s ]
+.br
+.B vacation
+.RI [ -j ]
+.RI [ -n ]
+.RI [ -tN ]
+.I username
+.SH DESCRIPTION
+.B vacation
+automatically replies to incoming mail. This version of
+.B vacation
+has been specifically tailored for use with a
+.B qmail
+mail transport agent. It will almost certainly fail if used with a
+different mail transport agent.
+.SH USAGE
+.SS Preparing to go away on vacation
+.LP
+Run
+.B vacation
+without any command line arguments.
+.LP
+The first time you run
+.BR vacation ,
+a default reply message will be created in
+.BR ~/.vacation.msg .
+If this file already exists, it will not be overwritten.  You'll be
+given the opportunity to see the contents of this file as well as the
+chance to edit it to make your own changes.
+.LP
+Once you are satisfied with the contents of the reply message,
+you will be asked if you would like to enable
+.BR vacation .
+.LP
+If you answer
+.IR yes ,
+a default
+.B ~/.qmail
+file will be created. The contents of this file are:
+
+.in 2i
+| /usr/local/bin/vacation \fIusername\fP
+.br
+$home/Maildir/
+.in
+
+(If you see an environment variable above - such as
+.I $home
+or
+.I $user
+- it will be expanded to its correct value during
+.B vacation's
+setup phase).
+.LP
+These instructions tell the
+.B qmail-local
+mail delivery agent to send an automatic reply to the sender of the
+message and to save a copy of the message in your default mailbox.
+.LP
+Answering
+.I yes
+also instructs
+.B vacation
+to initialise the
+.I dbm
+database file(s). The
+.I dbm
+database file(s) will contain details of who was sent an automatic
+reply and when it was sent. If the
+.I dbm
+database file(s) already exist, the contents will be cleared.
+.LP
+If you answer
+.I no
+when asked if you wish to enable
+.BR vacation ,
+neither the
+.B ~/.qmail
+nor the
+.I dbm
+database file(s) will be created.
+.SS Returning from vacation
+Run
+.B vacation
+without any command line arguments.
+.LP
+.B vacation
+displays the contents of your
+.B ~/.qmail
+file and asks if you would like to remove the file, thereby disabling
+.BR vacation .
+.LP
+If you answer
+.IR yes ,
+your
+.B ~/.qmail
+file will be removed.
+.B vacation
+will then display the contents of the
+.I dbm
+database, listing the mail addresses of those who were sent an
+automatic reply to their mail while you were away and the date on which
+the automatic reply was sent. The
+.I dbm
+database will then be cleared.
+.LP
+If you answer
+.IR no ,
+your
+.B ~/.qmail
+file will not be removed and the contents of the
+.I dbm
+database will remain unchanged.
+
+.SS Processing incoming mail
+When not in setup mode,
+.B vacation
+reads an incoming mail message from standard input and automatically
+sends a reply message to the sender. The reply text is taken from
+.BR ~/.vacation.msg .
+If this file does not exist, a default message will be used.
+
+.B vacation
+will
+.I not
+generate a reply if any of the following conditions are met:
+.TP
+.B -
+The sender address includes the string
+.BR -REQUEST@ .
+.TP
+.B -
+The sender is you.
+.TP
+.B -
+The sender's name is any of:
+.in 2i
+daemon
+.br
+postmaster
+.br
+mailer-daemon
+.br
+mailer
+.br
+root
+.in
+.TP
+.B -
+The sender matches any of the mail addresses listed in the optional
+files
+.B ~/.vacation.aliases
+and
+.BR ~/.vacation.noreply .
+See the
+.B FILES
+section below for more details on these files.
+.TP
+.B -
+There is a
+.B Precedence: bulk
+or
+.B Precedence: junk
+header.
+.TP
+.B -
+There is a
+.B Mailing-List:
+header.
+.TP
+.B -
+Your mail address, or any address you have listed in the optional
+.B ~/.vacation.aliases
+file does
+.I not
+appear in either the
+.B To:
+or
+.B Cc:
+headers. This feature can be disabled using the
+.B -j
+option. See the
+.B OPTIONS
+section below for more details on this option.
+.TP
+.B -
+An automatic reply has already been sent to the same address during
+the last week. The timeout value may be changed using the
+.B -t
+option. See the
+.B OPTIONS
+section below for more details on this option.
+.TP
+.B -
+.B -n
+was specified on the command line and the user does not have a 
+.B ~/.vacation.msg
+file.
+.SH OPTIONS
+.TP 10
+.I none
+If no command line options are provided,
+.B vacation
+will run as an interactive setup program. If you do not have a
+.B ~/.qmail
+file,
+.B vacation
+will assume you wish to enable its services. If you have a
+.B ~/.qmail
+file,
+.B vacation
+will assume you wish to disable its services.
+.TP 10
+.B -I
+Hands free initialisation.
+.B vacation
+will create your
+.BR ~/.qmail ,
+.B ~/.vacation.msg
+and
+.I dbm
+database files. If
+.I any
+of these files already exist, their contents will be replaced by the
+.B vacation
+defaults.
+.B vacation
+will exit after the initialisation process, regardless of any other
+command line options provided.
+.TP 10
+.B -s
+Show the contents of the
+.I dbm
+database. The contents will not be cleared and your
+.B ~/.qmail
+and
+.B ~/.vacation.msg
+files will remain intact.
+.B vacation
+will exit after displaying the contents of the
+.I dbm
+database, regardless of any other command line options provided.
+.TP 10
+.B -j
+Do not examine the incoming message
+.B To:
+or
+.B Cc:
+headers to determine if the message was sent directly to you rather
+than an alias. Using this option means that mail sent to an alias of
+which you are a member may generate an automatic reply. This option is
+only useful when specified in the
+.B ~/.qmail
+file.
+.TP 10
+.B -n
+Do not generate a reply message if the user's
+.B ~/.vacation.msg
+does not exist. Updates to the
+.I dbm
+database will still be performed. This option is for those users who
+wish to quickly disable
+.B vacation
+by removing their
+.B ~/.vacation.msg
+file. It can also be used at sites where users do not have shell
+accounts but can remove their own files via ftp or perhaps a purpose
+built web interface.
+.TP 10
+.BI -t N
+Change the interval between repeat replies to the same sender. The
+default is 1 week. A trailing
+.BR s ,
+.BR m ,
+.BR h ,
+.BR d ,
+or
+.B w
+scales the number
+.I N
+to seconds, minutes, hours, days or weeks respectively. For example, to
+set the interval value to 3 days you would specify
+.B -t3d.
+There should be
+.I no
+spaces between the
+.B -t
+and
+.IR N .
+This option is only useful when specified in the
+.B ~/.qmail
+file.
+.TP 10
+.I username
+Your login name. When
+.B vacation
+sees this argument it will examine standard input for an incoming mail
+message. The value of this argument is not actually used by this
+implementation of
+.B vacation
+as your login name is provided by a
+.B qmail
+environment variable. However an argument
+.I must
+be supplied so that
+.B vacation
+knows when to process incoming mail and when to provide an interactive
+setup session. Using your login name for this argument simply maintains
+a look and feel similar to the
+.B sendmail
+version of
+.BR vacation .
+.SH ENVIRONMENT
+.LP
+If the environment variable
+.B $VISUAL
+is set and is not null, its value determines the editor used to edit
+the
+.BR ~/.vacation.msg .
+If
+.B $VISUAL
+is not set or its value is null, the environment variable
+.B $EDITOR
+is examined. If it is set and is not null, its value determines the
+editor to be used. If
+.B $EDITOR
+is not set or its value is null, the default editor
+.B vi
+will be used.
+.LP
+If the environment variable
+.B $PAGER
+is set and is not null, its value determines the page viewing program
+to be used to display the
+.B ~/.vacation.msg
+and the contents of the
+.I dbm
+database. If it is not set or its value is null, the default page
+viewer
+.B less
+will be used.
+.SH FILES
+.TP 10
+.B ~/.vacation.msg
+Contains the text of the automatic reply message. It should
+.I not
+contain any
+.B From:
+or
+.B To:
+headers. If the string
+.B $SUBJECT
+appears in
+.BR ~/.vacation.msg ,
+it will be replaced with the subject of the original message. The
+default message is:
+
+.in 2i
+Subject: away from my mail
+
+I will not be reading my mail for a while. Your mail regarding
+
+     "$SUBJECT"
+
+will be read when I return.
+.in
+.TP 10
+.B ~/.qmail
+Contains the delivery instructions for
+the local mail delivery agent,
+.BR qmail-local .
+The default contents of this file are:
+
+.in 2i
+| /usr/local/bin/vacation \fIusername\fP
+.br
+$home/Maildir/
+.in
+
+(If you see an environment variable above - such as
+.I $home
+or
+.I $user
+- it will be expanded to its correct value during
+.B vacation's
+setup phase).
+
+The first line instructs
+.B qmail-local
+to generate an automatic reply  and the second line instructs
+.B qmail-local
+to save the incoming message in your default mailbox. Failure to
+include this line will result in automatic replies being generated but
+.I no
+mail will be saved in your default Mailbox.
+.TP 10
+.B ~/.vacation.*
+The
+.I dbm
+database file(s) used to store sender mail addresses and time stamps.
+The actual name of this file, or files, depends on the implementation
+of
+.B Perl
+you have at your site. Possibilities include
+.B ~/.vacation.pag
+and
+.B ~/.vacation.dir
+or
+.BR ~/.vacation.db .
+The actual names are unimportant as
+.B Perl
+deals with them internally.
+.TP 10
+.B ~/.vacation.aliases
+This optional file contains a list of mail addresses, one per line.
+Each address should be a fully qualified alias for yourself.  This file
+serves two purposes.
+
+Unless started
+with the
+.B -j
+option,
+.B vacation
+examines the incoming message
+.B To:
+and
+.B Cc:
+headers. If your mail address, or any of the mail addresses specified
+in
+.BR ~/.vacation.aliases ,
+match any of the addresses in these headers, an automatic reply will
+be generated for the message. If there is no match, an automatic reply
+will not be generated. This restricts
+.B vacation
+to replying to mail explicitly addressed to you or any of your
+aliases.
+
+The second purpose is to avoid sending an automatic reply to any
+incoming mail from yourself or one of your aliases - you already know
+you're on vacation!
+
+Lines beginning with a
+.I #
+character and blank lines will be ignored.
+.TP 10
+.B ~/.vacation.noreply
+This file contains a list of mail addresses, one per line. If an
+incoming mail message matches one of the listed addresses, an
+automatic reply will not be generated for that message. The addresses
+need not be fully qualified. If you will be sending yourself mail from
+a remote site, you may wish to include your remote address to avoid
+sending yourself an automatic reply.
+
+Lines beginning with a
+.I #
+character and blank lines will be ignored.
+.SH CAVEATS
+If you already have a
+.B ~/.qmail
+file, which contains delivery instructions other than those specified
+by
+.BR vacation ,
+there is a risk that it will be deleted by
+.BR vacation .
+It is good practise to keep a copy of your
+.B ~/.qmail
+file.
+
+If you are hand editing your
+.B ~/.qmail
+file, remember to include a delivery instruction to save the message in
+your default Mailbox, which should be
+.BR $home/Maildir/ .
+You
+.I must
+expand any environment variables - such as
+.I $home
+or
+.I $user
+- as
+.B qmail-local
+will not expand them for you.
+
+If you have a detailed
+.B ~/.vacation.msg
+with text different from the default, there is a risk that it will be
+deleted by
+.BR vacation .
+It is good practise to keep a copy of your
+.B ~/.vacation.msg
+file.
+
+If you are hand editing your
+.B ~/.vacation.msg
+file, the first block of lines up to the first blank line will form
+part of the mail headers.
+
+There is
+.I no
+need to run this version of
+.B vacation
+through
+.BR qmail 's
+.B preline
+program.
+.B preline
+is used to insert a
+.B UUCP
+style
+.B From
+header into the message. This version of
+.B vacation
+does not need that header. In fact, running this version of
+.B vacation
+through
+.B preline
+will cause problems if the incoming message is larger than your system's
+standard I/O buffer size.
+.B preline
+expects to pipe the entire message through a subsequent command.
+However
+.B vacation
+only examines the headers of the message, and then stops reading from
+standard input. This upsets
+.B preline
+if the size of the message is larger than a single I/O buffer. In this
+case
+.B preline
+will terminate with a transient error to
+.B qmail-send
+and you'll see the following message in your mail logs:
+
+.in 1i
+.B deferral: preline:_fatal:_unable_to_copy_input:_broken_pipe/
+.in
+
+The same problem exists if you use the traditional
+.B sendmail
+version of
+.B vacation
+with
+.BR qmail .
+That version of
+.B vacation
+requires the use of
+.B preline
+to provide it with the 
+.B UUCP
+style 
+.B From
+header.
+.SH VERSION
+Version 1.3
+.SH AUTHOR
+Peter Samuel, Uniq Professional Services
+.br
+<Peter.Samuel@uniq.com.au>
+.SH AVAILABILITY
+The latest version of
+.B vacation
+for
+.B qmail
+should always be available from
+.I ftp://ftp.uniq.com.au/pub/tools
+.SH SEE ALSO
+.BR vi (1),
+.BR less (1),
+.BR dot-qmail (5),
+.BR qmail (7),
+.BR qmail-command (8),
+.BR qmail-local (8),
+.BR qmail-send (8).

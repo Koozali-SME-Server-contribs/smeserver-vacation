@@ -1,0 +1,79 @@
+#!/usr/bin/perl -wT
+
+#----------------------------------------------------------------------
+# heading     : Collaboration
+# description : User vacations
+# navigation  : 3000 3150
+#
+# Copyright (c) 2001 Daniel van Raay <danielvr@caa.org.au>
+# Modified (c) 2002,2006 Stephen Noble <stephen@dungog.net>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+#----------------------------------------------------------------------
+
+use strict;
+use warnings;
+
+use esmith::FormMagick::Panel::uservacations;
+
+my $fm = esmith::FormMagick::Panel::uservacations->new();
+$fm->display();
+
+__DATA__
+<form title="FORM_TITLE"
+    header="/etc/e-smith/web/common/head.tmpl"
+    footer="/etc/e-smith/web/common/foot.tmpl">
+
+    <page
+        name="First"
+        pre-event="print_status_message()">
+
+    <!--    <field type="literal" display="user_accounts_exist()" >
+            <label>DESCRIPTION</label>
+        </field> -->
+
+        <subroutine src="user_accounts_exist()" />
+        <subroutine src="print_vacation_table" />
+    </page>
+
+    <page
+        name="VACATION_PAGE_MODIFY"
+        pre-event="turn_off_buttons()"
+        post-event="change_settings()" >
+
+        <description>MODIFY_DESCRIPTION</description>
+
+        <field type="literal" id="User" >
+            <label>ACCOUNT</label>
+        </field>
+
+        <field type="literal" id="FullName">
+            <label>USER_NAME</label>
+        </field>
+	
+	<field type="text" id="EmailVacationFrom">
+		<label>VACATION_FROM</label>
+	</field>
+
+	<field type="text" id="EmailVacationTo">
+		<label>VACATION_TO</label>
+	</field>
+
+        <subroutine src="get_vacation_text()" />
+
+        <field
+            type="select"
+            id="EmailVacation"
+            options="'no' => 'NO', 'yes' => 'YES'"
+            value="EmailVacation">
+            <label>VACATION_STATUS</label>
+        </field>
+
+        <subroutine src="print_button('SAVE')" />
+    </page>
+
+</form>

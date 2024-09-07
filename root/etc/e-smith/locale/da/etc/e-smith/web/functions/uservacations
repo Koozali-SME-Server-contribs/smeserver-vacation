@@ -1,0 +1,62 @@
+<lexicon lang="da">
+    <entry>
+      <base>User vacations</base>
+      <trans>Bruger fravær</trans>
+    </entry>
+    <entry>
+      <base>Vacation Message</base>
+      <trans>Fraværsbesked</trans>
+    </entry>
+    <entry>
+      <base>FORM_TITLE</base>
+      <trans>Skift indstillinger for brugers fravær</trans>
+    </entry>
+    <entry>
+      <base>DESCRIPTION</base>
+      <trans>Du kan ændre en brugers fraværsbesked ved at klikke på linket til højre for deres navn.</trans>
+    </entry>
+    <entry>
+      <base>LABEL_VACATION</base>
+      <trans>Fravær</trans>
+    </entry>
+    <entry>
+      <base>MODIFY_DESCRIPTION</base>
+      <trans><![CDATA[ <p> Skriv en fraværsbesked her. Du kan bruge "$SUBJECT" overalt i teksten som vil blive erstattet med indholdet i emnelinjen i den e mail som har aktiveret autosvaret. </p> <p> Denne besked skal bestå af to dele, adskilt af en blank linje. Den først del vil blive integreret ind i overskriften på e mail svaret, du må derfor sikre dig, at du indsætter mindst én blank linje før du skriver din besked.</p> <p> Det primære domæne bliver automatisk tilføjet til adressen, eller du kan indsætte et virtuelt domæne ved at erstatte domæne delen i afsender adressen i den første linje med det virtuelle navn (f.eks. erstat standard "Fra: user@primære.domæne" med "Fra: bruger@virtuelt.domæne"). For at skifte fraværsbeskeden tilbage til standard, skal du skrive "reset". </p> ]]></trans>
+    </entry>
+    <entry>
+      <base>VACATION_FROM</base>
+      <trans>Aktiver fraværsbesked den (ååååmmdd)</trans>
+    </entry>
+    <entry>
+      <base>VACATION_TO</base>
+      <trans>Deaktiver fraværsbesked den (ååååmmdd)</trans>
+    </entry>
+    <entry>
+      <base>MESSAGE</base>
+      <trans>Fraværsbesked</trans>
+    </entry>
+    <entry>
+      <base>VACATION_STATUS</base>
+      <trans>Aktiver fraværsbesked</trans>
+    </entry>
+    <entry>
+      <base>FROM</base>
+      <trans>Fra:</trans>
+    </entry>
+    <!-- this is read into a ~/.vacation.msg verbatim
+    leave a blank line after the subject line but not before, 
+    and don't translate $SUBJECT -->
+    <entry>
+      <base>AWAY_FROM_MAIL</base>
+      <trans>jeg kan ikke læse mine e mail i et stykke tid. Din e-mail om  $SUBJECT  vil jeg først læse, når jeg kommer tilbage.</trans>
+    </entry>
+    <entry>
+      <base>NO_USERS_IN_GRANTED_GROUPS</base>
+      <trans>Der er ingen brugere i den gruppe du har tilladelse til at administrere.</trans>
+    </entry>
+    <entry>
+      <base>ANSWER_TO_OBJECT_SENDER</base>
+      <trans>Sv: $SUBJECT - Væk fra mine e-mail </trans>
+    </entry>
+
+</lexicon>

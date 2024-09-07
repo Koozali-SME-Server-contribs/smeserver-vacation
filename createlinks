@@ -1,0 +1,9 @@
+#!/usr/bin/perl -w
+
+use esmith::Build::CreateLinks qw(:all);
+use File::Basename;
+use File::Path;
+
+panel_link("uservacations", "manager");
+
+event_link("contribs-possible-restart-smanager","smeserver-vacation-update","10");

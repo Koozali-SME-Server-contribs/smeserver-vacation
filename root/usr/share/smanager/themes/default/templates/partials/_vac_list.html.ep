@@ -1,0 +1,51 @@
+<div id='vac_list'>
+
+    %# my $btn = l('vac_CREATE_RULE');
+
+    %= form_for '/Uservacations1' => (method => 'POST') => begin
+	<br><br>
+
+    %	if ($empty){
+            <br>
+			%=l 'vac_NO_FORWARDS'
+    %	} else {
+   		<table class="sme-border TableSort"><thead>
+		<tr>
+			<th class='sme-border'>
+				%=l 'ACCOUNT'
+			</th>
+			<th class='sme-border'>
+				%=l 'USER_NAME'
+			</th>
+			<th class='sme-border'>
+				%=l 'vac_LABEL_VACATION'
+			</th>
+			
+			<th class='sme-border'>
+				%=$c->render_to_string(inline =>l('vac_VACATION_FROM'))
+			</th>
+			<th class='sme-border'>
+				%=$c->render_to_string(inline =>l('vac_VACATION_TO'))
+			</th>			
+			<th class='sme-border' '>
+				%=l 'ACTION'
+			</th>
+		</tr>
+		</thead><tbody>
+        % foreach my $vacation (@$vacations) {
+        <tr>
+			%= t td => (class => 'sme-border') => $vacation->{"User"}
+			%= t td => (class => 'sme-border') => $vacation->{"FullName"}
+			%= t td => (class => 'sme-border') => $vacation->{"status"}
+			%= t td => (class => 'sme-border') => $vacation->{"EmailVacationFrom"}
+			%= t td => (class => 'sme-border') => $vacation->{"EmailVacationTo"}
+			<td>
+				<a href="/smanager/Uservacations1?trt=ADD&account=<%= $vacation->{"User"}%>"><%=l 'MODIFY'%></a>
+			</td>		
+		</tr>
+		%} 
+		</tbody>
+		</table>
+   %}
+   % end    
+</div>

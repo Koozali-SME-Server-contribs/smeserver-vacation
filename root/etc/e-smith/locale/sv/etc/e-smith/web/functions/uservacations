@@ -1,0 +1,62 @@
+<lexicon lang="sv">
+    <entry>
+      <base>User vacations</base>
+      <trans>Användarfrånvaro</trans>
+    </entry>
+    <entry>
+      <base>Vacation Message</base>
+      <trans>Frånvaromeddelande</trans>
+    </entry>
+    <entry>
+      <base>FORM_TITLE</base>
+      <trans>Ändra användares frånvaromeddelande</trans>
+    </entry>
+    <entry>
+      <base>DESCRIPTION</base>
+      <trans>Du kan ändra en användares frånvaromeddelande genom att klicka till höger om deras namn nedan.</trans>
+    </entry>
+    <entry>
+      <base>LABEL_VACATION</base>
+      <trans>Frånvaro</trans>
+    </entry>
+    <entry>
+      <base>MODIFY_DESCRIPTION</base>
+      <trans><![CDATA[ <p> Enter a vacation message here. You can use "$SUBJECT" anywhere in the text to be replaced with the subject line from the email that activated the auto-reply. </p> <p> This message must be composed of two parts separated by a blank line. The first will be integrated into the headings of the email reply, you must thus ensure you leave at least a blank line before typing your message. </p> <p> The primary domain is added to the address automatically, or you can insert a virtual domain by replacing the domain part of the sender address in the first line of the message with the virtual domain name (eg. replace the default "From: user@primary.domain" with "From: user@virtual.domain"). To change the vacation message back to the default type "reset". </p> <p> You can also fill out the "Enable vacation on" and "Disable vacation on" fields in order to automatically enable and disable sending of the vacation message for this user account on the given dates. </p> <p> The format used is YYYYMMDD (four digit year, two digit month, two digit day) and the dates in the two fields must not be the same. If you want to use this functionality, leave the "Enable vacation messages" setting at "No" - it will be automatically activated based on the date given. </p> </p> ]]></trans>
+    </entry>
+    <entry>
+      <base>VACATION_FROM</base>
+      <trans>Enable vacation on (YYYYMMDD)</trans>
+    </entry>
+    <entry>
+      <base>VACATION_TO</base>
+      <trans>Disable vacation on (YYYYMMDD)</trans>
+    </entry>
+    <entry>
+      <base>MESSAGE</base>
+      <trans>Frånvaromeddelande</trans>
+    </entry>
+    <entry>
+      <base>VACATION_STATUS</base>
+      <trans>Aktivera frånvaromeddelanden</trans>
+    </entry>
+    <entry>
+      <base>FROM</base>
+      <trans>Från:</trans>
+    </entry>
+    <!-- this is read into a ~/.vacation.msg verbatim
+    leave a blank line after the subject line but not before, 
+    and don't translate $SUBJECT -->
+    <entry>
+      <base>AWAY_FROM_MAIL</base>
+      <trans>Jag kan inte läsa ditt e-postmeddelande på ett tag. Ditt meddelande angående $SUBJECT kommer att läsas när jag är tillbaka.</trans>
+    </entry>
+    <entry>
+      <base>NO_USERS_IN_GRANTED_GROUPS</base>
+      <trans>There are no users in the group(s) that you are granted to manage.</trans>
+    </entry>
+    <entry>
+      <base>ANSWER_TO_OBJECT_SENDER</base>
+      <trans>Sv: $SUBJECT - Frånvarande.</trans>
+    </entry>
+
+</lexicon>

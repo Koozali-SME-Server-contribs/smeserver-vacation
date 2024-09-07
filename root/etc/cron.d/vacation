@@ -1,0 +1,11 @@
+# Check each user account if a vacation message should be enabled
+# or disabled based on the given From/To vacation dates
+# Do it shortly after midnight on every day
+#
+# Comment or edit the following line if you want to receive a status mail
+# everytime this cron script runs
+MAILTO=""
+#
+SHELL=/bin/sh
+PATH=/sbin/e-smith:/sbin:/bin:/usr/sbin:/usr/bin
+5 0 * * * root /sbin/e-smith/vacation/check_vacation_dates.sh

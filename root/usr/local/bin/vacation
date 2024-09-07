@@ -1,0 +1,511 @@
+#!/usr/bin/perl
+#
+# $Id: vacation.pl,v 1.3 1999/01/04 04:28:17 psamuel Exp $
+#
+# Vacation program for qmail. Based on the original version for
+# sendmail by Larry Wall <lwall@jpl-devvax.jpl.nasa.gov> and Tom
+# Christiansen <tchrist@convex.com>.
+#
+# The original is available from CPAN as
+#
+#     CPAN/scripts/mailstuff/vacation
+#
+# This version by Peter Samuel <peter@uniq.com.au>
+#
+# Minor changes by Daniel van Raay <danielvr@caa.org.au>
+#
+
+###########################################################################
+
+use DB_File;
+require 5;
+$check_to_and_cc = 1;
+$dot_vacation_prefix = "";
+
+###########################################################################
+#
+# Process any command line arguments.
+
+while ($ARGV[0] =~ /^-/)
+{
+    $_ = shift;
+
+    if (/^-I/i)
+    {
+	&initialise();
+	exit(0);
+    }
+
+    if (/^-n/)
+    {
+	$no_msg_no_reply = 1;
+    }
+
+    if (/^-j/)
+    {
+	$check_to_and_cc = 0;
+    }
+
+    if (/^-s/)
+    {
+	chdir;
+	&get_user_details();
+	&show_dbm_file("$dbm_file");
+	exit(0);
+    }
+
+    if (/^-t([\d.]*)([smhdw])/)
+    {
+	&time_scales();
+	$timeout = $1;
+	$timeout *= $scale{$2} if $2;
+    }
+
+    if (/^-p*/)
+    {
+        $dot_vacation_prefix = $1;
+    }
+}
+
+&interactive() if (! scalar @ARGV);
+
+###########################################################################
+#
+# Process incoming mail. Qmail provides a number of environment
+# variables that detail the properties of the incoming mail message.
+
+# Qmail always supplies $DTLINE. If it isn't set then we probably
+# aren't being called by qmail.
+exit(0) unless $ENV{'DTLINE'};
+
+$rpline = $ENV{'RPLINE'};
+$ufline = $ENV{'UFLINE'};
+exit(0) if ($ufline =~ /-REQUEST\@/i);
+exit(0) if ($rpline =~ /-REQUEST\@/i);
+
+$home = $ENV{'HOME'};
+$host = lc($ENV{'HOST'});
+$sender = lc($ENV{'SENDER'});
+$user = lc($ENV{'USER'});
+
+$timeout = 60 * 60 * 24 * 7 unless $timeout;
+
+chdir;
+&get_program_details();
+&check_ignores();
+&check_headers();
+&check_lastdate("$dbm_file");
+&send_reply();
+exit(0);
+
+###########################################################################
+
+sub interactive
+{
+    chdir;
+    &get_user_details();
+
+    if (-f "$dot_qmail_file")
+    {
+	print
+	    "You have a $dot_qmail_file in your home directory containing:\n\n";
+	
+	&cat_file("$dot_qmail_file");
+
+	print "\n";
+
+	print "Would you like to remove it and disable the vacation feature?";
+
+	if (&yesno())
+	{
+	    &delete_qmail_file("$dot_qmail_file");
+	    &show_dbm_file("$dbm_file");
+	    &clear_dbm_file("$dbm_file");
+	    print "\nBack to normal reception of mail.\n";
+	    exit(0);
+	}
+
+	print << "EOF";
+Mail is still under the control of your $dot_qmail_file file.
+EOF
+	
+	exit(0);
+    }
+    
+    print << "EOF";
+This program can be used to answer your mail automatically
+when you go away on vacation.
+
+EOF
+
+    if (-f "$message_file")
+    {
+	print "You already have a message file in $home/$message_file.\n";
+
+	if (&yesno("Would you like to see it?"))
+	{
+	    &show_file("$message_file");
+	}
+
+	if (&yesno("Would you like to edit it?"))
+	{
+	    &edit_file("$message_file");
+	}
+    }
+    else
+    {
+	&create_msg_file("$message_file", "$vacation_msg");
+
+	print << "EOF";
+A default vacation message has been created in $home/$message_file.
+This message will be automatically returned to anyone sending you mail
+while you're away.
+
+EOF
+
+	if (&yesno("Would you like to see it?"))
+	{
+	    &show_file("$message_file");
+	}
+
+	if (&yesno("Would you like to edit it?"))
+	{
+	    &edit_file("$message_file");
+	}
+    }
+
+	print << "EOF";
+
+To enable the vacation feature a $home/$dot_qmail_file file is created.
+EOF
+
+	if (&yesno("Would you like to enable the vacation feature now?"))
+	{
+	    &create_qmail_file("$dot_qmail_file", "$dot_qmail_commands");
+	    &clear_dbm_file("$dbm_file");
+
+	    print << "EOF";
+
+The vacation feature has been enabled. Please remember to turn it off
+when you return. Bon voyage!
+EOF
+	}
+	else
+	{
+	    print "\nThe vaction feature has not been enabled.\n";
+	}
+
+    exit(0);
+}
+
+sub initialise
+{
+    chdir;
+    &get_user_details();
+    &clear_dbm_file("$dbm_file");
+    &create_msg_file("$message_file", "$vacation_msg");
+    &create_qmail_file("$dot_qmail_file", "$dot_qmail_commands");
+    exit(0);
+}
+
+sub edit_file
+{
+    my($file) = @_;
+
+    system("$editor $file");
+}
+
+sub cat_file
+{
+    my($file) = @_;
+
+    open(FILE, "$file");
+    print while(<FILE>);
+    close(FILE);
+}
+
+sub show_file
+{
+    my($file) = @_;
+
+    system("$pager $file");
+}
+
+sub show_dbm_file
+{
+    my($file) = @_;
+    local(%DBM);		# Can't be my()
+    my($key);
+    require "ctime.pl";
+
+    open(PAGER, "| $pager");
+
+    print PAGER << "EOF";
+Welcome back!
+While you were away, vacation mail was sent to the following addresses:
+
+EOF
+
+    dbmopen(%DBM, "$file", 0644);
+
+    foreach $key (sort keys %DBM)
+    {
+	print PAGER "$key\n";
+	print PAGER "    ", ctime(unpack("L", $DBM{$key}));
+    }
+
+    dbmclose(%DBM);
+    close(PAGER);
+}
+
+sub clear_dbm_file
+{
+    my($file) = @_;
+    local(%DBM);		# Can't be my()
+
+    dbmopen(%DBM, "$file", 0644);
+
+    undef %DBM;
+
+    dbmclose(%DBM);
+}
+
+sub create_msg_file
+{
+    my($file, $msg) = @_;
+
+    open(MSG, "> $file");
+
+    print MSG $msg;
+    close(MSG);
+    chmod(0644, $file);
+}
+
+sub create_qmail_file
+{
+    my($file, $msg) = @_;
+
+    open(MSG, "> $file");
+
+    print MSG $msg;
+    close(MSG);
+    chmod(0644, $file);
+}
+
+sub delete_qmail_file
+{
+    my($file) = @_;
+
+    unlink("$file");
+}
+
+sub yesno
+{
+    my($msg) = @_;
+    my($answer);
+
+    while (1)
+    {
+	print "$msg [y/n] ";
+	$answer = <STDIN>;
+	last if $answer =~ /^[yn]/i;
+    }
+
+    $answer =~ /^y/i;
+}
+
+sub get_common_details
+{
+    $message_file = $dot_vacation_prefix . ".vacation.msg";
+    $dbm_file = $dot_vacation_prefix . ".vacation";
+
+    $vacation_msg = << 'EOF';		# Must use single quotes
+Subject: away from my mail
+
+I will not be reading my mail for a while. Your mail regarding
+
+     "$SUBJECT"
+
+will be read when I return.
+EOF
+}
+
+sub get_program_details
+{
+    &get_common_details();
+
+    $mailprog = "/var/qmail/bin/datemail -t";
+    $aliases = $dot_vacation_prefix . ".vacation.aliases";
+    $noreply = $dot_vacation_prefix . ".vacation.noreply";
+}
+
+sub get_user_details
+{
+    &get_common_details();
+
+    $user = $ENV{'USER'} || $ENV{'LOGNAME'} || getlogin || (getpwuid($>))[0];
+    $dot_qmail_file = ".qmail";
+    $editor = $ENV{'VISUAL'} || $ENV{'EDITOR'} || 'vi';
+    $home = (getpwnam($user))[7];
+    $mailbox = "$home/Maildir/";
+    $pager = $ENV{'PAGER'} || 'less';
+    $vacation = "/usr/local/bin/vacation";
+
+    $dot_qmail_commands = << "EOF";	# Must use double quotes
+| $vacation $user
+$mailbox
+EOF
+}
+
+sub time_scales
+{
+    %scale =
+    (
+	's', 1,
+	'm', 60,
+	'h', 60 * 60,
+	'd', 60 * 60 * 24,
+	'w', 60 * 60 * 24 * 7,
+    );
+}
+
+sub check_ignores
+{
+    &get_aliases();
+    push(@ignores, @aliases);
+
+    push(@ignores,
+	'daemon',
+	'postmaster',
+	'mailer-daemon',
+	'mailer',
+	'root',
+	'',
+    );
+
+    if (-f "$noreply")
+    {
+	open(NOREPLY, "$noreply");
+
+	while(<NOREPLY>)
+	{
+	    chomp;
+	    next if (/^\s*#|^$/);
+	    push(@ignores, lc($_));
+	}
+
+	close(NOREPLY);
+    }
+
+    for (@ignores)
+    {
+	exit(0) if ($sender eq $_);
+	exit(0) if ($sender =~ /^$_\@/);
+    }
+}
+
+sub check_headers
+{
+    my($header);
+
+    $/ = '';			# Read in paragraph mode
+
+    $header = <STDIN>;
+    $header =~ s/\n\s+/ /g;	# Join continuation lines
+
+    exit(0) if ($header =~ /^Precedence:\s+(bulk|junk|list)/im);
+    exit(0) if ($header =~ /^From.*-REQUEST\@/im);
+    exit(0) if ($header =~ /^Mailing-List:/im);
+    exit(0) if ($header =~ /^X-Spam-Status:\s+Yes/im);
+
+    if ($check_to_and_cc)
+    {
+	($to) = ($header =~ /To:\s+(.*)/im);
+	($cc) = ($header =~ /Cc:\s+(.*)/im);
+	$to .= ', ' . $cc if $cc;
+	$to = lc($to);
+
+	for (@aliases)
+	{
+	    ++$alias_match if $to =~ /\b$_\b/im;
+	}
+
+	exit(0) unless $alias_match;
+    }
+
+    ($subject) = ($header =~ /^Subject:\s+(.*)/im);
+    $subject =~ s/\s*$//m;		# Remove trailing spaces
+
+    $subject = "(No subject)" unless $subject;
+}
+
+sub get_aliases
+{
+    @aliases =
+    (
+	"$user\@$host",
+    );
+
+    if (-f "$aliases")
+    {
+	open(ALIASES, "$aliases");
+
+	while(<ALIASES>)
+	{
+	    chomp;
+	    next if (/^\s*#|^$/);
+	    push(@aliases, lc($_));
+	}
+
+	close(ALIASES);
+    }
+}
+
+sub check_lastdate
+{
+    my($file) = @_;
+
+    dbmopen(%DBM, "$file", 0644);
+
+    $now = time;
+    $then = unpack("L", $DBM{"$sender"});
+
+    exit(0) if (($now - $then) <= $timeout);
+
+    $DBM{$sender} = pack("L", $now);
+    close(%DBM);
+}
+
+sub send_reply()
+{
+    if (-f "$message_file")
+    {
+	open(MSG, "$message_file");
+	undef $/;			# Read in the entire file
+	$vacation_msg = <MSG>;
+	close(MSG);
+    }
+    else
+    {
+	# Do not generate a reply if the user doesn't have a message file
+	# and -n was supplied on the command line.
+
+	exit(0) if ($no_msg_no_reply);
+    }
+
+    my $type = ($vacation_msg =~ m/<html/ && $vacation_msg =~ m/<\/html>/  ) ? 'html':'plain';
+
+    $vacation_msg =~ s/\$SUBJECT/$subject/g;
+
+    open(MAILPROG, "| $mailprog");
+
+    print MAILPROG << "EOF";
+To: $sender
+Precedence: junk
+Content-Type: text/$type; charset="UTF-8"
+EOF
+
+    print MAILPROG $vacation_msg;
+
+    close(MAILPROG);
+}

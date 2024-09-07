@@ -1,0 +1,62 @@
+<lexicon lang="de">
+    <entry>
+      <base>User vacations</base>
+      <trans>Abwesenheitsnotizen</trans>
+    </entry>
+    <entry>
+      <base>Vacation Message</base>
+      <trans>Abwesenheitsnotiz</trans>
+    </entry>
+    <entry>
+      <base>FORM_TITLE</base>
+      <trans>Einstellungen zur Benutzerabwesenheit ändern</trans>
+    </entry>
+    <entry>
+      <base>DESCRIPTION</base>
+      <trans>Die Abwesenheitsnotiz eines Benutzers können Sie ändern, indem Sie auf den Link rechts neben dem jeweiligen Benutzernamen klicken.</trans>
+    </entry>
+    <entry>
+      <base>LABEL_VACATION</base>
+      <trans>Abwesenheitsnotiz</trans>
+    </entry>
+    <entry>
+      <base>MODIFY_DESCRIPTION</base>
+      <trans><![CDATA[ <p> Geben Sie eine Abwesenheitsnotiz ein. Der Parameter <b>"$SUBJECT"</b> enthält den Betreff der empfangenen E-Mail und kann an beliebiger Stelle im Text der automatischen Antwort platziert werden. </p> <p>Eine vollständige Abwesenheitsnotiz besteht aus zwei Teilen, die voneinander durch eine Leerzeile getrennt sein müssen: der gesamte Text bis zur ersten freien Zeile wird in die Kopfzeile der E-Mail-Antwort aufgenommen. Lassen Sie deshalb mindestens eine Zeile frei, bevor Sie den eigentlichen Text Ihrer Abwesenheitsnotiz eingeben. </p> <p> Die Haupt-Domäne wird der Adresse automatisch hinzugefügt. Sie können aber auch eine Adresse aus einer virtuellen Domäne verwenden, indem Sie für die Absenderadresse in der ersten Zeile der Abwesenheitsnotiz die Hauptdomäne durch eine virtuelle Domäne ersetzen (ersetzen Sie z.B. die voreingestellte Adresse: "From: benutzer@hauptdomaene.xx"  durch "From: benutzer@virtuelledomaene.xx"). Um die Abwesenheitsnotiz auf den Standard-Text zurück zu setzen geben sie "reset" ein.</p><p>Sie können auch die entsprechenden Felder ausfüllen, um die Abwesenheitsnachricht für diesen Benutzer zu einem bestimmten Datum automatisch ein- und auszuschalten.</p><p>Geben Sie jeweils das entsprechende Datum im Format JJJJMMDD (vierstellige Jahreszahl, zweistellige Monatsnummer, zweistellige Tageszahl) ein. In beiden Feldern darf nicht das selbe Datum stehen. <br />Verwenden Sie für eintägige Abwesenheit das Datum des Folgetages für die Deaktivierung der Abwesenheitsnotiz. </p><p>Wenn Sie ein Datum für die automatische Aktivierung angegeben haben belassen Sie die Schaltfläche "Abwesenheitsnotiz aktivieren" auf "Nein" - die Aktivierung erfolgt automatisch am gewählten Datum.]]></trans>
+    </entry>
+    <entry>
+      <base>VACATION_FROM</base>
+      <trans>automatisch aktivieren am (JJJJMMDD)</trans>
+    </entry>
+    <entry>
+      <base>VACATION_TO</base>
+      <trans>automatisch deaktivieren am (JJJJMMDD)</trans>
+    </entry>
+    <entry>
+      <base>MESSAGE</base>
+      <trans>Abwesenheitsnotiz</trans>
+    </entry>
+    <entry>
+      <base>VACATION_STATUS</base>
+      <trans>Abwesenheitsnotiz aktivieren</trans>
+    </entry>
+    <entry>
+      <base>FROM</base>
+      <trans>Von:</trans>
+    </entry>
+    <!-- this is read into a ~/.vacation.msg verbatim
+    leave a blank line after the subject line but not before, 
+    and don't translate $SUBJECT -->
+    <entry>
+      <base>AWAY_FROM_MAIL</base>
+      <trans>I will not be reading my mail for a while. Your mail regarding $SUBJECT will be read when I return.</trans>
+    </entry>
+    <entry>
+      <base>NO_USERS_IN_GRANTED_GROUPS</base>
+      <trans>There are no users in the group(s) that you are granted to manage.</trans>
+    </entry>
+    <entry>
+      <base>ANSWER_TO_OBJECT_SENDER</base>
+      <trans>Re: $SUBJECT - Away from my email</trans>
+    </entry>
+
+</lexicon>
