@@ -4,7 +4,7 @@
 
 %define name smeserver-vacation
 %define version 1.1
-%define release 37
+%define release 38
 Summary: SME Server enhancement to enable vacation messages for users.
 Name: %{name}
 Version: %{version}
@@ -16,11 +16,11 @@ Source: %{name}-%{version}.tar.xz
 
 BuildArchitectures: noarch
 BuildRoot: /var/tmp/%{name}-%{version}
-Requires: e-smith-release >= 9.0,
-Requires: e-smith-formmagick >= 1.4.0-12
+Requires: smeserver-release >= 9.0,
+Requires: smeserver-formmagick >= 1.4.0-12
 # needs /usr/share/perl5/vendor_perl/ctime.pl
 Requires: perl-Perl4-CoreLibs
-BuildRequires: e-smith-devtools >= 1.13.1-03
+BuildRequires: smeserver-devtools >= 1.13.1-03
 #BuildRequires: smeserver-manager >= 24
 AutoReqProv: no
 
@@ -30,6 +30,9 @@ Optionally provides a user-manager panel where users can
 enable vacation for themselves and to modify their own message
 
 %changelog
+* Sun Sep 08 2024 fix-e-smith-pkg.sh by Trevor Batley <trevor@batley.id.au> 1.1-38.sme
+- Fix e-smith references in smeserver-vacation [SME: 12732]
+
 * Sat Sep 07 2024 cvs2git.sh aka Brian Read <brianr@koozali.org> 1.1-37.sme
 - Roll up patches and move to git repo [SME: 12338]
 
