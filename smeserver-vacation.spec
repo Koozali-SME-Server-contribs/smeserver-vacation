@@ -3,8 +3,8 @@
 # Name: Stephen Noble
 
 %define name smeserver-vacation
-%define version 1.1
-%define release 38
+%define version 11.0.0
+%define release 1
 Summary: SME Server enhancement to enable vacation messages for users.
 Name: %{name}
 Version: %{version}
@@ -30,6 +30,9 @@ Optionally provides a user-manager panel where users can
 enable vacation for themselves and to modify their own message
 
 %changelog
+* Sat May 17 2025 Brian Read <brianr@koozali.org> 11.0.0-1.sme
+- Fix call to $config-> to  config-> in default panel [SME: 12908]
+
 * Sun Sep 08 2024 fix-e-smith-pkg.sh by Trevor Batley <trevor@batley.id.au> 1.1-38.sme
 - Fix e-smith references in smeserver-vacation [SME: 12732]
 
