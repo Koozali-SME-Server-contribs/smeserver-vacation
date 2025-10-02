@@ -24,11 +24,12 @@ use SrvMngr qw(theme_list init_session);
 
 use Data::Dumper;
 use esmith::util;
-use esmith::HostsDB;
+#use esmith::HostsDB::UTF8;
 use esmith::AccountsDB;
+use esmith::ConfigDB::UTF8;
 
-our $db  = esmith::ConfigDB->open();
-our $adb = esmith::AccountsDB->open();
+my $db;
+my $adb;
 
 our $PanelUser = $ENV{'REMOTE_USER'} ||'';
 $PanelUser = $1 if ($PanelUser =~ /^([a-z][\.\-a-z0-9]*)$/);
@@ -43,11 +44,33 @@ sub main {
     my $c = shift;
     $c->app->log->info( $c->log_req );
 
+	$db  = esmith::ConfigDB::UTF8->open() || die("Couldn't open config db");
+	$adb = esmith::AccountsDB->open() || die("Couldn't open accounts db");
+
     my %vac_datas = ();
     my $title = $c->l('vac_FORM_TITLE');
     my $modul = '';
 
-    $vac_datas{trt} = 'LIST';
+	if (! $c->is_admin) {
+		#Here it is in user panel mode and needs the current user data loaded up
+		$vac_datas{trt} = 'ADD';
+		my $account = $c->session('username'); #TESTING from somewhere ....#$c->param("account");
+		my $user = $adb->get($account);
+		my $username = $user->prop("FirstName")." ".$user->prop("LastName");
+        my $EmailVacation = $user->prop('EmailVacation') || '';
+		my $EmailVacationFrom = $user->prop('EmailVacationFrom') || '';
+		my $EmailVacationTo = $user->prop('EmailVacationTo') || '';
+		$c->stash(account=>$account);
+		my $VacText = get_vacation_text($c);
+        $c->stash(username=>$username,
+                  EmailVacation=>$EmailVacation,
+                  EmailVacationFrom=>$EmailVacationFrom,
+                  EmailVacationTo=>$EmailVacationTo,
+                  VacText=>$VacText                 
+                  );  
+	} else {
+		$vac_datas{trt} = 'LIST';
+	}
     
 	my @vacations = get_vacation_table($c); 
 	my $empty = (scalar @vacations == 0);
@@ -69,6 +92,9 @@ sub do_display {
     my $c = shift;
     $c->app->log->info( $c->log_req );
 
+	$db  = esmith::ConfigDB::UTF8->open() || die("Couldn't open config db");
+	$adb = esmith::AccountsDB->open() || die("Couldn't open accounts db");
+
     my $rt           = $c->current_route;
     my $trt          = ( $c->param('trt') || 'LIST' );
 
@@ -89,9 +115,9 @@ sub do_display {
         my $EmailVacation = $user->prop('EmailVacation') || '';
 		my $EmailVacationFrom = $user->prop('EmailVacationFrom') || '';
 		my $EmailVacationTo = $user->prop('EmailVacationTo') || '';
+		$c->stash(account=>$account);
 		my $VacText = get_vacation_text($c);
-        $c->stash(account=>$account,
-                  username=>$username,
+        $c->stash(username=>$username,
                   EmailVacation=>$EmailVacation,
                   EmailVacationFrom=>$EmailVacationFrom,
                   EmailVacationTo=>$EmailVacationTo,
@@ -103,10 +129,29 @@ sub do_display {
 		#Add or edit vacation message. 
         my $ret = add_vac_message($c);	
         #Return to list page if success	
+        # unless in user panel, in which case return to vacation msg display
         if ($ret eq "OK")  {
-			$trt = "LIST";	
-			$vac_datas{success} = "vac_SUCCESS";
-
+			if (! $c->is_admin){
+				$trt = "ADD";
+				#my $fred = 1/0;
+				my $account = $c->session('username'); #TESTING from somewhere ....#$c->param("account");
+				my $user = $adb->get($account);
+				my $username = $user->prop("FirstName")." ".$user->prop("LastName");
+				my $EmailVacation = $user->prop('EmailVacation') || '';
+				my $EmailVacationFrom = $user->prop('EmailVacationFrom') || '';
+				my $EmailVacationTo = $user->prop('EmailVacationTo') || '';
+				my $VacText = get_vacation_text($c);
+				$c->stash(account=>$account,
+						  username=>$username,
+						  EmailVacation=>$EmailVacation,
+						  EmailVacationFrom=>$EmailVacationFrom,
+						  EmailVacationTo=>$EmailVacationTo,
+						  VacText=>$VacText                 
+						  );  
+			} else {
+				$trt = "LIST";	
+				$vac_datas{success} = "vac_SUCCESS";
+			}
 		} else {
 			my $account = $c->param("account");
 			my $user = $adb->get($account);
@@ -209,13 +254,19 @@ sub get_vacation_table
     return @data;
 }
 
-sub showDate
-{
-	my $strDate = shift;
-    my ($Year,$Month,$Day)  = ($strDate =~ /(\d{4})(\d{2})(\d{2})/);
-    #my $Unix = mktime(0,0,0,$Day,$Month,$Year);
+sub showDate {
+    my $strDate = shift;
+
+    # Try to capture Year, Month, Day from the string
+    my ($Year, $Month, $Day) = ($strDate =~ /(\d{4})(\d{2})(\d{2})/);
+
+    # Provide default values if regex capture fails or any part is undefined
+    $Year  = defined $Year  ? $Year  : '0000';
+    $Month = defined $Month ? $Month : '00';
+    $Day   = defined $Day   ? $Day   : '00';
+
     return "$Year-$Month-$Day";
-}  
+}
 
 	
 sub modify_link
@@ -240,8 +291,7 @@ sub get_vacation_text
 {
     my $q = shift;
     my $domain = $db->get_value('DomainName');
-    my $user = $q->param('account');
-
+    my $user = $q->param('account') || $q->stash('account') || "unknown";
     my $fullname    = $adb->get_prop($user, "FirstName") . " " .
                       $adb->get_prop($user, "LastName");
 
@@ -257,6 +307,10 @@ sub get_vacation_text
 
     my $ExistingMessage = "$from $fullname \<$user\@$domain\>\n"."$Subject $return\n".
                           "\n$away\n"."\n--\n$fullname";
+
+$q->app->log->info( "DEBUG: File path is $vfile\n");
+$q->app->log->info( "DEBUG: File exists? ", -e $vfile, "\n");
+$q->app->log->info( "DEBUG: File empty? ", -z $vfile, "\n");
 
 
     # if exists and is not empty

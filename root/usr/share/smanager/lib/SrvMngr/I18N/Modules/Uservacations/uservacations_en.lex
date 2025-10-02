@@ -1,12 +1,3 @@
-package SrvMngr::I18N::Modules::Uservacations::en;
-use strict;
-use warnings;
-use utf8;
-use Mojo::Base 'SrvMngr::I18N';
-
-use SrvMngr::I18N::Modules::General::en;
-
-my %lexicon = (
 'vac_User vacations' =>'User vacations',
 'vac_Vacation Message' =>'Vacation Message',
 'vac_FORM_TITLE' =>'Change user vacation settings',
@@ -52,12 +43,3 @@ my %lexicon = (
 	 The dates in the two fields must not be the same.<br>
 	 If you want to use this functionality, leave the Enable vacation messages setting at No - it will be automatically activated based on the date given.
  </p>'
-);
-
-our %Lexicon = (
-	%{ SrvMngr::I18N::Modules::General::en::Lexicon },
-	%lexicon
-);
-
-
-1;
