@@ -4,7 +4,7 @@
 
 %define name smeserver-vacation
 %define version 11.0.0
-%define release 3
+%define release 4
 Summary: SME Server enhancement to enable vacation messages for users.
 Name: %{name}
 Version: %{version}
@@ -30,6 +30,9 @@ Optionally provides a user-manager panel where users can
 enable vacation for themselves and to modify their own message
 
 %changelog
+* Thu Oct 02 2025 Brian Read <brianr@koozali.org> 11.0.0-4.sme
+- Make sure that default if no db entry is no vacation message  [SME: 13208]
+
 * Thu Oct 02 2025 Brian Read <brianr@koozali.org> 11.0.0-3.sme
 - Fix typo in event template [SME: 13208]
 - Correct check on debug config for showing route [SME: 13208]

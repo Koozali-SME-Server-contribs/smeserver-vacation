@@ -57,7 +57,7 @@ sub main {
 		my $account = $c->session('username'); #TESTING from somewhere ....#$c->param("account");
 		my $user = $adb->get($account);
 		my $username = $user->prop("FirstName")." ".$user->prop("LastName");
-        my $EmailVacation = $user->prop('EmailVacation') || '';
+        my $EmailVacation = $user->prop('EmailVacation') || 'no';
 		my $EmailVacationFrom = $user->prop('EmailVacationFrom') || '';
 		my $EmailVacationTo = $user->prop('EmailVacationTo') || '';
 		$c->stash(account=>$account);
@@ -112,7 +112,7 @@ sub do_display {
 		my $account = $c->param("account");
 		my $user = $adb->get($account);
 		my $username = $user->prop("FirstName")." ".$user->prop("LastName");
-        my $EmailVacation = $user->prop('EmailVacation') || '';
+        my $EmailVacation = $user->prop('EmailVacation') || 'no';
 		my $EmailVacationFrom = $user->prop('EmailVacationFrom') || '';
 		my $EmailVacationTo = $user->prop('EmailVacationTo') || '';
 		$c->stash(account=>$account);
@@ -235,11 +235,11 @@ sub get_vacation_table
     {
         next if %delegatedVacations and not $delegatedVacations{$user->key};
         # make it clearer which uses have vacation
-        my $EmailVacation = $user->prop('EmailVacation') || '';
+        my $EmailVacation = $user->prop('EmailVacation') || 'no';
 		my $EmailVacationFrom = $user->prop('EmailVacationFrom') || '';
 		my $EmailVacationTo = $user->prop('EmailVacationTo') || '';
-        my $status        = $user->prop('EmailVacation') || '';
-        if ($status eq 'yes') { $status = 'YES'; } else { $status = ''; }
+        my $status        = $user->prop('EmailVacation') || 'no';
+        if ($status eq 'yes') { $status = 'YES'; } else { $status = 'NO'; }
 
         push @data,
             { 	User           => $user->key,
