@@ -4,7 +4,7 @@
 
 %define name smeserver-vacation
 %define version 11.0.0
-%define release 2
+%define release 3
 Summary: SME Server enhancement to enable vacation messages for users.
 Name: %{name}
 Version: %{version}
@@ -30,6 +30,10 @@ Optionally provides a user-manager panel where users can
 enable vacation for themselves and to modify their own message
 
 %changelog
+* Thu Oct 02 2025 Brian Read <brianr@koozali.org> 11.0.0-3.sme
+- Fix typo in event template [SME: 13208]
+- Correct check on debug config for showing route [SME: 13208]
+
 * Wed Oct 01 2025 Brian Read <brianr@koozali.org> 11.0.0-2.sme
 - Restore missing lex file  [SME: 13208]
 - Make front end work for user panel as well as admin panel [SME:  13208]

@@ -1,8 +1,8 @@
 #!/bin/sh
 if (systemctl list-unit-files |grep smanager) then
   echo "Restarting smanager"
-  /sbin/e-smith/signal-event manager2-refresh;
+  /sbin/e-smith/signal-event smanager-refresh;
   systemctl restart smanager
 else
- echo "Smanager not loaded"
+ echo "smanager not loaded"
 fi
