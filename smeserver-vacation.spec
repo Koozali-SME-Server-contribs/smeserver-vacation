@@ -4,7 +4,7 @@
 
 %define name smeserver-vacation
 %define version 11.0.0
-%define release 4
+%define release 5
 Summary: SME Server enhancement to enable vacation messages for users.
 Name: %{name}
 Version: %{version}
@@ -30,6 +30,9 @@ Optionally provides a user-manager panel where users can
 enable vacation for themselves and to modify their own message
 
 %changelog
+* Sat Oct 04 2025 Brian Read <brianr@koozali.org> 11.0.0-5.sme
+- Remove smanager-refresh from spec file [SME: 13212]
+
 * Thu Oct 02 2025 Brian Read <brianr@koozali.org> 11.0.0-4.sme
 - Make sure that default if no db entry is no vacation message  [SME: 13208]
 
@@ -403,10 +406,6 @@ if [ -d /etc/e-smith/events/conf-userpanel ] ; then
    /sbin/e-smith/signal-event conf-userpanel
 fi
 
-if (systemctl list-unit-files |grep smanager) then
-  echo "Smanager restart in spec file"
-  /sbin/e-smith/signal-event smanager-refresh;
-fi
 
 %postun
 #uninstall
