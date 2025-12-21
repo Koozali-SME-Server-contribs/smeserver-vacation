@@ -64,8 +64,8 @@ sub main {
 		my $VacText = get_vacation_text($c);
         $c->stash(username=>$username,
                   EmailVacation=>$EmailVacation,
-                  EmailVacationFrom=>$EmailVacationFrom,
-                  EmailVacationTo=>$EmailVacationTo,
+				EmailVacationFrom => showDate($EmailVacationFrom),
+				EmailVacationTo => showDate($EmailVacationTo),
                   VacText=>$VacText                 
                   );  
 	} else {
@@ -119,8 +119,8 @@ sub do_display {
 		my $VacText = get_vacation_text($c);
         $c->stash(username=>$username,
                   EmailVacation=>$EmailVacation,
-                  EmailVacationFrom=>$EmailVacationFrom,
-                  EmailVacationTo=>$EmailVacationTo,
+				EmailVacationFrom => showDate($EmailVacationFrom),
+				EmailVacationTo => showDate($EmailVacationTo),
                   VacText=>$VacText                 
                   );  
     }
@@ -144,8 +144,8 @@ sub do_display {
 				$c->stash(account=>$account,
 						  username=>$username,
 						  EmailVacation=>$EmailVacation,
-						  EmailVacationFrom=>$EmailVacationFrom,
-						  EmailVacationTo=>$EmailVacationTo,
+				EmailVacationFrom => showDate($EmailVacationFrom),
+				EmailVacationTo => showDate($EmailVacationTo),
 						  VacText=>$VacText                 
 						  );  
 			} else {
@@ -163,8 +163,8 @@ sub do_display {
 			$c->stash(account=>$account,
 					  username=>$username,
 					  EmailVacation=>$EmailVacation,
-					  EmailVacationFrom=>$EmailVacationFrom,
-					  EmailVacationTo=>$EmailVacationTo,
+				EmailVacationFrom => showDate($EmailVacationFrom),
+				EmailVacationTo => showDate($EmailVacationTo),
 					  VacText=>$VacText                 
                   );  
 			#Error - return to Add page

@@ -6,6 +6,8 @@
 	<p>
 	  %= dumper $c->current_route
 	  %= dumper $EmailVacation
+	  %= dumper $EmailVacationTo
+	  %= dumper $EmailVacationFrom
 	</p>
     % }
      
@@ -25,13 +27,13 @@
 				%=$c->render_to_string(inline =>$c->l('vac_VACATION_FROM1'))
 			</span>
 			<span class=data>
-				%=date_field 'EmailVacationFrom' =>$EmailVacationFrom
+			  %= date_field EmailVacationFrom => (param('EmailVacationFrom') // $c->stash->{EmailVacationFrom})
 			</span><br>
 			<span class=label>
 				%=$c->render_to_string(inline =>$c->l('vac_VACATION_TO1'))
 			</span>
 			<span class=data>
-				%=date_field 'EmailVacationTo' =>$EmailVacationTo
+			  %= date_field EmailVacationTo => (param('EmailVacationTo') // $c->stash->{EmailVacationTo})
 			</span><br>
 			<span class=label>
 				%=l 'vac_MESSAGE'

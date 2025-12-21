@@ -6,6 +6,7 @@
     % if (config->{debug} == 1) {
 	<p>
 		%= dumper $c->current_route
+		%= dumper $vac_datas
 	</p>
     % }
     
