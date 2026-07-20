@@ -22,8 +22,8 @@ our @ISA = qw(esmith::FormMagick Exporter);
 
 our @EXPORT = qw();
 
-our $db  = esmith::ConfigDB->open();
-our $adb = esmith::AccountsDB->open();
+our $db  = esmith::ConfigDB::UTF8->open();
+our $adb = esmith::AccountsDB::UTF8->open();
 
 our $PanelUser = $ENV{'REMOTE_USER'} ||'';
 $PanelUser = $1 if ($PanelUser =~ /^([a-z][\.\-a-z0-9]*)$/);

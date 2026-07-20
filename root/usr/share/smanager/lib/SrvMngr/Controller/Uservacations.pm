@@ -45,7 +45,7 @@ sub main {
     $c->app->log->info( $c->log_req );
 
 	$db  = esmith::ConfigDB::UTF8->open() || die("Couldn't open config db");
-	$adb = esmith::AccountsDB->open() || die("Couldn't open accounts db");
+	$adb = esmith::AccountsDB::UTF8->open() || die("Couldn't open accounts db");
 
     my %vac_datas = ();
     my $title = $c->l('vac_FORM_TITLE');
@@ -93,7 +93,7 @@ sub do_display {
     $c->app->log->info( $c->log_req );
 
 	$db  = esmith::ConfigDB::UTF8->open() || die("Couldn't open config db");
-	$adb = esmith::AccountsDB->open() || die("Couldn't open accounts db");
+	$adb = esmith::AccountsDB::UTF8->open() || die("Couldn't open accounts db");
 
     my $rt           = $c->current_route;
     my $trt          = ( $c->param('trt') || 'LIST' );

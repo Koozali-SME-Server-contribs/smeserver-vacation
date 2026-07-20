@@ -4,7 +4,7 @@
 
 %define name smeserver-vacation
 %define version 11.0.0
-%define release 6
+%define release 7
 Summary: SME Server enhancement to enable vacation messages for users.
 Name: %{name}
 Version: %{version}
@@ -30,6 +30,9 @@ Optionally provides a user-manager panel where users can
 enable vacation for themselves and to modify their own message
 
 %changelog
+* Mon Jul 20 2026 Brian Read <brianr@koozali.org> 11.0.0-7.sme
+- Add UTF8 where needed in DB open calls [SME: 13666]
+
 * Sun Dec 21 2025 Brian Read <brianr@koozali.org> 11.0.0-6.sme
 - Sort out missing start and end in add panel [SME: 13208]
 
