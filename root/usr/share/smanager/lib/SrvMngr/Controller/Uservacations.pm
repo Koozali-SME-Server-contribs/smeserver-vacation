@@ -309,8 +309,8 @@ sub get_vacation_text
                           "\n$away\n"."\n--\n$fullname";
 
 $q->app->log->info( "DEBUG: File path is $vfile\n");
-$q->app->log->info( "DEBUG: File exists? ", -e $vfile, "\n");
-$q->app->log->info( "DEBUG: File empty? ", -z $vfile, "\n");
+$q->app->log->info( "DEBUG: File exists? ", (-e $vfile)? "exists":"missing" , "\n");
+$q->app->log->info( "DEBUG: File empty? ", (-z $vfile)? "empty":"not empty" , "\n");
 
 
     # if exists and is not empty
