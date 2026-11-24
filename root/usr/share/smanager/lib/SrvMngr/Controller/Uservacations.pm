@@ -348,13 +348,24 @@ sub add_vac_message
     #if ($EmailVacation eq "yes") {$EmailVacation = "yes";} else {$EmailVacation = "no";}
 
     #Decode To and FROM to standard format - comes over in html5 iso format yyyy-mm-dd
-    my $EmailVacationFrom = trim($q->param('EmailVacationFrom'));
-    my ($fromYear,$fromMonth,$fromDay)  = ($EmailVacationFrom =~ /(\d{4})-(\d{2})-(\d{2})/);
-    $EmailVacationFrom = $fromYear.$fromMonth.$fromDay;
-    if ($EmailVacationFrom !~ m/^2[0-9]{3}[0|1][0-9][0-3][0-9]$/ and $EmailVacationFrom ne "") {return "vac_FROM_DATE_INCORRECT";}
-    my $EmailVacationTo = trim($q->param('EmailVacationTo'));
-    my ($toYear,$toMonth,$toDay)  = ($EmailVacationTo =~ /(\d{4})-(\d{2})-(\d{2})/);
-    $EmailVacationTo = $toYear.$toMonth.$toDay;
+	my $EmailVacationFrom = trim($q->param('EmailVacationFrom'));
+	my ($fromYear,$fromMonth,$fromDay)  = ($EmailVacationFrom =~ /(\d{4})-(\d{2})-(\d{2})/);
+	# Set defaults for uninitialized variables to legal date 1/1/1970
+	$fromYear //= "1970";
+	$fromMonth //= "01";
+	$fromDay //= "01";
+	$EmailVacationFrom = $fromYear.$fromMonth.$fromDay;
+	if ($EmailVacationFrom !~ m/^2[0-9]{3}[0|1][0-9][0-3][0-9]$/ and $EmailVacationFrom ne "") {
+		return "vac_FROM_DATE_INCORRECT";
+	}
+
+	my $EmailVacationTo = trim($q->param('EmailVacationTo'));
+	my ($toYear,$toMonth,$toDay)  = ($EmailVacationTo =~ /(\d{4})-(\d{2})-(\d{2})/);
+	# Set defaults for uninitialized variables to legal date 1/1/1970
+	$toYear //= "1970";
+	$toMonth //= "01";
+	$toDay //= "01";
+	$EmailVacationTo = $toYear.$toMonth.$toDay;
 #    $EmailVacationTo =~ s/-//g; #Just take out "-".  
     if ($EmailVacationTo !~ m/^2[0-9]{3}[0|1][0-9][0-3][0-9]$/ and $EmailVacationFrom ne "") {return "vac_TO_DATE_INCORRECT";}
     #Check not the same or From follows To.   

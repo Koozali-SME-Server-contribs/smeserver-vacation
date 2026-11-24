@@ -34,6 +34,7 @@ enable vacation for themselves and to modify their own message
 - send using qpsmtpd and dkim sign [SME: 12503]
 - allow case sensitive mail [SME: 10317]
 - remove sm1 pamel [SME: 13352]
+- Fix uninitialised vars [SME: 13208]
 
 * Mon Jul 20 2026 Brian Read <brianr@koozali.org> 11.0.0-7.sme
 - Add UTF8 where needed in DB open calls [SME: 13666]
