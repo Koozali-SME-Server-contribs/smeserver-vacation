@@ -4,7 +4,7 @@
 
 %define name smeserver-vacation
 %define version 11.0.0
-%define release 7
+%define release 8
 Summary: SME Server enhancement to enable vacation messages for users.
 Name: %{name}
 Version: %{version}
@@ -30,6 +30,11 @@ Optionally provides a user-manager panel where users can
 enable vacation for themselves and to modify their own message
 
 %changelog
+* Mon Nov 23 2026 Jean-Philippe Pialasse <jpp@koozali.org> 11.0.0-8.sme
+- send using qpsmtpd and dkim sign [SME: 12503]
+- allow case sensitive mail [SME: 10317]
+- remove sm1 pamel [SME: 13352]
+
 * Mon Jul 20 2026 Brian Read <brianr@koozali.org> 11.0.0-7.sme
 - Add UTF8 where needed in DB open calls [SME: 13666]
 

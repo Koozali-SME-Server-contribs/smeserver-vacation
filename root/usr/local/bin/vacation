@@ -14,9 +14,15 @@
 #
 # Minor changes by Daniel van Raay <danielvr@caa.org.au>
 #
+# altered by JP Pialasse <jp@koozali.org> in 2026 to send using qpsmtpd and DKIM sign
+#
 
 ###########################################################################
 
+use Encode qw(decode encode FB_CROAK);
+use Net::SMTP;
+use POSIX qw(strftime);
+use Net::Domain qw(hostname hostfqdn hostdomain);
 use DB_File;
 require 5;
 $check_to_and_cc = 1;
@@ -85,7 +91,8 @@ exit(0) if ($rpline =~ /-REQUEST\@/i);
 
 $home = $ENV{'HOME'};
 $host = lc($ENV{'HOST'});
-$sender = lc($ENV{'SENDER'});
+# SME 10317 some mail provider are case sensitive
+$sender = $ENV{'SENDER'};
 $user = lc($ENV{'USER'});
 
 $timeout = 60 * 60 * 24 * 7 unless $timeout;
@@ -334,7 +341,8 @@ sub get_program_details
 {
     &get_common_details();
 
-    $mailprog = "/var/qmail/bin/datemail -t";
+    $smtp_host = "127.0.0.1";
+    $smtp_port = 25;
     $aliases = $dot_vacation_prefix . ".vacation.aliases";
     $noreply = $dot_vacation_prefix . ".vacation.noreply";
 }
@@ -480,32 +488,74 @@ sub send_reply()
 {
     if (-f "$message_file")
     {
-	open(MSG, "$message_file");
-	undef $/;			# Read in the entire file
-	$vacation_msg = <MSG>;
-	close(MSG);
+        open(my $fh, '<:raw', $message_file) or die "Cannot open $message_file: $!";
+        local $/;                       # Slurp entire file safely without altering global $/
+        my $raw_bytes = <$fh>;
+        close($fh);
+
+        # Test if valid UTF-8; if it fails, assume ISO-8859-1 (Latin-1)
+        my $decoded_text;
+        eval {
+            $decoded_text = decode('UTF-8', $raw_bytes, FB_CROAK);
+        };
+        if ($@) {
+            $decoded_text = decode('iso-8859-1', $raw_bytes);
+        }
+
+        # Re-encode to UTF-8 octets so Net::SMTP sends clean UTF-8 bytes
+        $vacation_msg = encode('UTF-8', $decoded_text);
+        
+       # open(MSG, "$message_file");
+       # undef $/;                       # Read in the entire file
+       # $vacation_msg = <MSG>;
+       # close(MSG);
     }
     else
     {
-	# Do not generate a reply if the user doesn't have a message file
-	# and -n was supplied on the command line.
-
-	exit(0) if ($no_msg_no_reply);
+        exit(0) if ($no_msg_no_reply);
     }
 
     my $type = ($vacation_msg =~ m/<html/ && $vacation_msg =~ m/<\/html>/  ) ? 'html':'plain';
-
     $vacation_msg =~ s/\$SUBJECT/$subject/g;
 
-    open(MAILPROG, "| $mailprog");
+    # RFC 2822 date
+    my $date_rfc = strftime("%a, %d %b %Y %H:%M:%S %z", localtime());
 
-    print MAILPROG << "EOF";
-To: $sender
-Precedence: junk
-Content-Type: text/$type; charset="UTF-8"
-EOF
+    # qpsmtpd localhost:25
+    my $smtp = Net::SMTP->new($smtp_host, Port => $smtp_port, Timeout => 30)
+        or die "Unable to connect to qpsmtpd $smtp_host:$smtp_port : $!";
 
-    print MAILPROG $vacation_msg;
+    # SMTP enveloppe
+    # MAIL FROM is usually empty for auto answer ("") to prevent bounce loop,
+    # but DKIM migh want one. Test with $from_addr first.
+    # $host comes from qmail-mini and is local
+    my $from_addr = "$user\@".hostdomain();
+    #if ($vacation_msg =~ /^From:\s*(?:.*<([^>]+)>|([^\s\r\n]+))/im) {
+    #    $from_addr = $1 || $2;
+    #}
+    #if ($vacation_msg !~ /^From:/im) {
+        $smtp->mail($from_addr);
+    #}
+    $smtp->to($sender);
 
-    close(MAILPROG);
+    # headers and body
+    $smtp->data();
+    $smtp->datasend("Date: $date_rfc\n");
+    if ($vacation_msg !~ /^From:/im) {
+    $smtp->datasend("From: $from_addr\n");
+    }
+    $smtp->datasend("To: $sender\n");
+    $smtp->datasend("Precedence: junk\n");
+    $smtp->datasend("Auto-Submitted: auto-replied\n"); 
+    $smtp->datasend("Content-Type: text/$type; charset=\"UTF-8\"\n");
+
+    if ($vacation_msg !~ /^Subject:/im) {
+        $smtp->datasend("Subject: Re: $subject\n\n");
+    }
+
+    $smtp->datasend($vacation_msg);
+    $smtp->dataend();
+
+    $smtp->quit();
 }
+
