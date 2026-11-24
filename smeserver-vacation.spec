@@ -4,7 +4,7 @@
 
 %define name smeserver-vacation
 %define version 11.0.0
-%define release 8
+%define release 9
 Summary: SME Server enhancement to enable vacation messages for users.
 Name: %{name}
 Version: %{version}
@@ -30,7 +30,7 @@ Optionally provides a user-manager panel where users can
 enable vacation for themselves and to modify their own message
 
 %changelog
-* Mon Nov 23 2026 Jean-Philippe Pialasse <jpp@koozali.org> 11.0.0-8.sme
+* Mon Nov 23 2026 Jean-Philippe Pialasse <jpp@koozali.org> 11.0.0-9.sme
 - send using qpsmtpd and dkim sign [SME: 12503]
 - allow case sensitive mail [SME: 10317]
 - remove sm1 pamel [SME: 13352]
@@ -384,18 +384,6 @@ enable vacation for themselves and to modify their own message
 
 %build
 perl createlinks
-
-LEXICONS=$(find root/etc/e-smith/{locale/,web/functions/} -type f )
-for lexicon in $LEXICONS
-do
-    /sbin/e-smith/validate-lexicon $lexicon
-done
-
-LINKS=$(find root/etc/e-smith/locale/ -type d -maxdepth 1 | sed 's/root\/etc\/e-smith\/locale\///')
-for link in $LINKS
-do
- /bin/ln -s uservacations root/etc/e-smith/locale/$link/etc/e-smith/web/functions/userpanel-vacation
-done
 
 %install
 rm -rf $RPM_BUILD_ROOT
