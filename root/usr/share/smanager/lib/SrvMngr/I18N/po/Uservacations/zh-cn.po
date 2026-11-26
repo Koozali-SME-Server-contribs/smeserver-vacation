@@ -1,0 +1,86 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: smeserver-manager Uservacations module\n"
+"POT-Creation-Date: 2026-11-26 11:09+0000\n"
+"PO-Revision-Date: 2026-11-26 11:09+0000\n"
+"Last-Translator: unassigned\n"
+"Language-Team: unassigned\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh-cn\n"
+
+msgid "NO_USERS_IN_GRANTED_GROUPS"
+msgstr "(en) NO_USERS_IN_GRANTED_GROUPS"
+
+msgid "vac_ANSWER_TO_OBJECT_SENDER"
+msgstr "Re: $SUBJECT - Away from my email"
+
+msgid "vac_AWAY_FROM_MAIL"
+msgstr "I will not be reading my mail for a while. Your mail regarding $SUBJECT will be read when I return."
+
+msgid "vac_DATES_THE_SAME"
+msgstr "(en) The Start and Finish dates cannot be the same"
+
+msgid "vac_DESCRIPTION"
+msgstr "您可以点击用户名右边的链接修改用户的假期留言。"
+
+msgid "vac_FORM_TITLE"
+msgstr "更改用户休假设置"
+
+msgid "vac_FROM"
+msgstr "来自："
+
+msgid "vac_FROM_DATE_INCORRECT"
+msgstr "(en) From date must have YYYYMMDD format"
+
+msgid "vac_LABEL_VACATION"
+msgstr "假期"
+
+msgid "vac_MESSAGE"
+msgstr "假期留言"
+
+msgid "vac_MODIFY"
+msgstr "(en) vac_MODIFY"
+
+msgid "vac_MODIFY_DESCRIPTION"
+msgstr " <p> Enter a vacation message here. You can use \"$SUBJECT\" anywhere in the text to be replaced with the subject line from the email that activated the auto-reply. </p> <p> This message must be composed of two parts separated by a blank line. The first will be integrated into the headings of the email reply, you must thus ensure you leave at least a blank line before typing your message. </p> <p> The primary domain is added to the address automatically, or you can insert a virtual domain by replacing the domain part of the sender address in the first line of the message with the virtual domain name (eg. replace the default \"From: user@primary.domain\" with \"From: user@virtual.domain\"). To change the vacation message back to the default type \"reset\". </p> <p> You can also fill out the \"Enable vacation on\" and \"Disable vacation on\" fields in order to automatically enable and disable sending of the vacation message for this user account on the given dates. </p> <p> The format used is YYYYMMDD (four digit year, two digit month, two digit day) and the dates in the two fields must not be the same. If you want to use this functionality, leave the \"Enable vacation messages\" setting at \"No\" - it will be automatically activated based on the date given. </p> </p> "
+
+msgid "vac_NO_FORWARDS"
+msgstr "(en) No users found for forwarding"
+
+msgid "vac_NO_USERS_IN_GRANTED_GROUPS"
+msgstr "There are no users in the group(s) that you are granted to manage."
+
+msgid "vac_SUBJECT"
+msgstr "(en) Subject:"
+
+msgid "vac_SUCCESS"
+msgstr "(en) Vacation message saved sucessfully"
+
+msgid "vac_TO_DATE_INCORRECT"
+msgstr "(en) To date must have YYYYMMDD format"
+
+msgid "vac_TO_DATE_MUST_BE_LATER"
+msgstr "(en) The Finish dates cannot be earlier than the Start date"
+
+msgid "vac_User vacations"
+msgstr "用户假期"
+
+msgid "vac_VACATION_FROM"
+msgstr "Enable vacation on (YYYYMMDD)"
+
+msgid "vac_VACATION_FROM1"
+msgstr "(en) Vacation starts on"
+
+msgid "vac_VACATION_STATUS"
+msgstr "启用假期留言"
+
+msgid "vac_VACATION_TO"
+msgstr "Disable vacation on (YYYYMMDD)"
+
+msgid "vac_VACATION_TO1"
+msgstr "(en) Vacation finishes on"
+
+msgid "vac_Vacation Message"
+msgstr "假日留言"

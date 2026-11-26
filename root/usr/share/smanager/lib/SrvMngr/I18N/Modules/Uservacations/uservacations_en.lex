@@ -42,4 +42,6 @@
 	 <p>
 	 The dates in the two fields must not be the same.<br>
 	 If you want to use this functionality, leave the Enable vacation messages setting at No - it will be automatically activated based on the date given.
- </p>'
+ </p>',
+'NO_USERS_IN_GRANTED_GROUPS' => 'NO_USERS_IN_GRANTED_GROUPS',
+'vac_MODIFY' => 'vac_MODIFY',  

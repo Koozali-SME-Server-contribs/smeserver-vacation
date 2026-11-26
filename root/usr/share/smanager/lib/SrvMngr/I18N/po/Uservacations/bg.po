@@ -1,0 +1,86 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: smeserver-manager Uservacations module\n"
+"POT-Creation-Date: 2026-11-26 11:09+0000\n"
+"PO-Revision-Date: 2026-11-26 11:09+0000\n"
+"Last-Translator: unassigned\n"
+"Language-Team: unassigned\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+
+msgid "NO_USERS_IN_GRANTED_GROUPS"
+msgstr "(en) NO_USERS_IN_GRANTED_GROUPS"
+
+msgid "vac_ANSWER_TO_OBJECT_SENDER"
+msgstr "Отг: $SUBJECT - няма достъп до пощата"
+
+msgid "vac_AWAY_FROM_MAIL"
+msgstr "Няма да мога да прочета пощата си за известно време. Вашето съобщение относно $SUBJECT ще бъде прочетено, когато се завърна."
+
+msgid "vac_DATES_THE_SAME"
+msgstr "(en) The Start and Finish dates cannot be the same"
+
+msgid "vac_DESCRIPTION"
+msgstr "Можете да променяте съобщение на потребителя при отсъствие като щракнете на връзката от дясно на името му."
+
+msgid "vac_FORM_TITLE"
+msgstr "Промяна на настройките за отсъствие"
+
+msgid "vac_FROM"
+msgstr "От:"
+
+msgid "vac_FROM_DATE_INCORRECT"
+msgstr "(en) From date must have YYYYMMDD format"
+
+msgid "vac_LABEL_VACATION"
+msgstr "Отсъствие"
+
+msgid "vac_MESSAGE"
+msgstr "Съобщение за отсъствие"
+
+msgid "vac_MODIFY"
+msgstr "(en) vac_MODIFY"
+
+msgid "vac_MODIFY_DESCRIPTION"
+msgstr " <p> Въведете съобщение при отсъствие тук. Можете да използвате \"$SUBJECT\" навсякъде в текста, което ще бъде заменено с полето \"относно\" от съобщението, което е активирало автоматичния отговор. </p> <p> Това съобщение трябва да бъде сглобено от две част, разделени с празен ред. Първата ще бъде интегрирана в заглавната част на съобщението-отговор, и затова се уверете че сте оставили поне празен ред преди текста на съобщението. </p> <p> Основният домейн ще бъде добавен към адреса автоматично, или можете да вмъкнете виртуален домейн като замените частта за домейн на адреса на изпращача на първия ред от съобщението с виртуалния домейн (например, заменете стандартното \"From: user@primary.domain\" с \"From: user@virtual.domain\"). За да промените съобщението отново в стандартното, напишете \"reset\". </p> <p> Можете също да попълните полетата \"Включи отсъствие от\" and \"Изключи отсъствие от\" за да включите и изключите автоматично изпращането на съобщение за този потребител на определена дата. </p> <p> Форматът, който се използва е ГГГГММДД (четири цифри за година, две цифри за месец, две цифри за ден) и датите в двете полета не трябва да са еднакви. Ако искате да използвате тази функционалност, оставете настройката \"Включи съобщение при отсъствие\" на \"Не\" - то автоматично ще се активира на база на зададените дати. </p> </p> "
+
+msgid "vac_NO_FORWARDS"
+msgstr "(en) No users found for forwarding"
+
+msgid "vac_NO_USERS_IN_GRANTED_GROUPS"
+msgstr "Няма потребители в групата(ите), които сте упълномощен да управлявате."
+
+msgid "vac_SUBJECT"
+msgstr "(en) Subject:"
+
+msgid "vac_SUCCESS"
+msgstr "(en) Vacation message saved sucessfully"
+
+msgid "vac_TO_DATE_INCORRECT"
+msgstr "(en) To date must have YYYYMMDD format"
+
+msgid "vac_TO_DATE_MUST_BE_LATER"
+msgstr "(en) The Finish dates cannot be earlier than the Start date"
+
+msgid "vac_User vacations"
+msgstr "Отсъствие на потребител"
+
+msgid "vac_VACATION_FROM"
+msgstr "Включи отсъствие от (ГГГГММДД)"
+
+msgid "vac_VACATION_FROM1"
+msgstr "(en) Vacation starts on"
+
+msgid "vac_VACATION_STATUS"
+msgstr "Включи съобщения при отсъствие"
+
+msgid "vac_VACATION_TO"
+msgstr "Изключи отсъствие от (ГГГГММДД)"
+
+msgid "vac_VACATION_TO1"
+msgstr "(en) Vacation finishes on"
+
+msgid "vac_Vacation Message"
+msgstr "Съобщение при отсъствие"

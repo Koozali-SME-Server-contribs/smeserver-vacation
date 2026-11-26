@@ -1,0 +1,86 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: smeserver-manager Uservacations module\n"
+"POT-Creation-Date: 2026-11-26 11:09+0000\n"
+"PO-Revision-Date: 2026-11-26 11:09+0000\n"
+"Last-Translator: unassigned\n"
+"Language-Team: unassigned\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+
+msgid "NO_USERS_IN_GRANTED_GROUPS"
+msgstr "(en) NO_USERS_IN_GRANTED_GROUPS"
+
+msgid "vac_ANSWER_TO_OBJECT_SENDER"
+msgstr "Re: $SUBJECT - Non posso leggere la mia posta"
+
+msgid "vac_AWAY_FROM_MAIL"
+msgstr "Non potrò leggere la mia posta per un po' di tempo. Il vostro messaggio con oggetto $SUBJECT verrà letto al mio ritorno."
+
+msgid "vac_DATES_THE_SAME"
+msgstr "(en) The Start and Finish dates cannot be the same"
+
+msgid "vac_DESCRIPTION"
+msgstr "Il messaggio per l'utente assente può essere modificato cliccando sul link a destra del nome."
+
+msgid "vac_FORM_TITLE"
+msgstr "Modifica le impostazioni per utente assente"
+
+msgid "vac_FROM"
+msgstr "Da:"
+
+msgid "vac_FROM_DATE_INCORRECT"
+msgstr "(en) From date must have YYYYMMDD format"
+
+msgid "vac_LABEL_VACATION"
+msgstr "Assente"
+
+msgid "vac_MESSAGE"
+msgstr "Messagio utente assente"
+
+msgid "vac_MODIFY"
+msgstr "(en) vac_MODIFY"
+
+msgid "vac_MODIFY_DESCRIPTION"
+msgstr " <p> Inserire qui il messaggio utente assente. Si può utilizzare la variabile \"$SUBJECT\" in qualunque punto del messaggio per richiamare l'oggetto del messaggio che ha attivato l'auto-risposta. </p> <p> Il messaggio deve essere composto di due parti separate da una riga vuota. La prima parte sarà integrata nell'intestazione della risposta, perciò assicuratevi di lasciare una riga vuota prima del messaggio vero e proprio. </p> <p> Il dominio primario viene aggiunto automaticamente al messaggio, oppure è possibile inserire un dominio virtuale sostituendo la parte del dominio dell'indirizzo del mittente nella prima riga del messaggio con il nome di dominio virtuale (ad esempio, sostituire il predefinito \"From: user@primary.domain\" con \"From: user@virtual.domain\"). Per ripristinare il messaggio di utente assente al valore di default selezionare \"reset\". </p> <p> E' anche possibile compilare i campi \"Abilita assenza il\" e \"Disabilita assenza il\" al fine di attivare e disattivare l'invio del messaggio di assenza per questo account utente per le date indicate automaticamente. </p> <p> Il formato utilizzato è YYYYMMDD (4 numeri per l'anno (Y), due numeri per il mese (M) e due numeri per il giorno (D)) e le date nei due campi non possono essere le stesse. Se si vuole utilizzare questa funzionalità lasciare \"Abilita messaggi di vacanza\" impostato a \"No\", sarà automaticamente attivato in base alla data indicata. </p> </p> "
+
+msgid "vac_NO_FORWARDS"
+msgstr "(en) No users found for forwarding"
+
+msgid "vac_NO_USERS_IN_GRANTED_GROUPS"
+msgstr "Non ci sono uenti nel gruppo(i) che vi è consentito gestire"
+
+msgid "vac_SUBJECT"
+msgstr "(en) Subject:"
+
+msgid "vac_SUCCESS"
+msgstr "(en) Vacation message saved sucessfully"
+
+msgid "vac_TO_DATE_INCORRECT"
+msgstr "(en) To date must have YYYYMMDD format"
+
+msgid "vac_TO_DATE_MUST_BE_LATER"
+msgstr "(en) The Finish dates cannot be earlier than the Start date"
+
+msgid "vac_User vacations"
+msgstr "Assenze utente"
+
+msgid "vac_VACATION_FROM"
+msgstr "Abilita messaggio utente assente il (YYYYMMDD)"
+
+msgid "vac_VACATION_FROM1"
+msgstr "(en) Vacation starts on"
+
+msgid "vac_VACATION_STATUS"
+msgstr "Abilita messaggio utente assente"
+
+msgid "vac_VACATION_TO"
+msgstr "Disabilita messaggio utente assente il (YYYYMMDD)"
+
+msgid "vac_VACATION_TO1"
+msgstr "(en) Vacation finishes on"
+
+msgid "vac_Vacation Message"
+msgstr "Messaggio utente assente"

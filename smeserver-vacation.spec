@@ -4,7 +4,7 @@
 
 %define name smeserver-vacation
 %define version 11.0.0
-%define release 10
+%define release 11
 Summary: SME Server enhancement to enable vacation messages for users.
 Name: %{name}
 Version: %{version}
@@ -20,8 +20,10 @@ Requires: smeserver-release >= 9.0,
 Requires: smeserver-formmagick >= 1.4.0-12
 # needs /usr/share/perl5/vendor_perl/ctime.pl
 Requires: perl-Perl4-CoreLibs
+
 BuildRequires: smeserver-devtools >= 1.13.1-03
 #BuildRequires: smeserver-manager >= 24
+BuildRequires: gettext
 AutoReqProv: no
 
 %description
@@ -30,6 +32,9 @@ Optionally provides a user-manager panel where users can
 enable vacation for themselves and to modify their own message
 
 %changelog
+* Thu Nov 26 2026 Brian Read <brianr@koozali.org> 11.0.0-11.sme
+- Add in po files [SME: 13867]
+
 * Mon Nov 23 2026 Jean-Philippe Pialasse <jpp@koozali.org> 11.0.0-10.sme
 - send using qpsmtpd and dkim sign [SME: 12503]
 - allow case sensitive mail [SME: 10317]
@@ -56,12 +61,12 @@ enable vacation for themselves and to modify their own message
 - Restore missing lex file  [SME: 13208]
 - Make front end work for user panel as well as admin panel [SME:  13208]
 - Fix possible DB caching problems [SME: 13208]
-- Add in UTF8 fix for DB access [SME: 13208]
+- Add in UTF8 Add in po files for DB access [SME: 13208]
 
 * Sat May 17 2025 Brian Read <brianr@koozali.org> 11.0.0-1.sme
 - Fix call to $config-> to  config-> in default panel [SME: 12908]
 
-* Sun Sep 08 2024 fix-e-smith-pkg.sh by Trevor Batley <trevor@batley.id.au> 1.1-38.sme
+* Sun Sep 08 2024 Add in po files-e-smith-pkg.sh by Trevor Batley <trevor@batley.id.au> 1.1-38.sme
 - Fix e-smith references in smeserver-vacation [SME: 12732]
 
 * Sat Sep 07 2024 cvs2git.sh aka Brian Read <brianr@koozali.org> 1.1-37.sme
@@ -127,17 +132,17 @@ enable vacation for themselves and to modify their own message
 - Translation patch added
 - Added smeserver-vacation-1.1-locale-2016-07-15.patch
 - Added a signature in the email body
-- modified smeserver-vacation-1.1.bz8772.fix.vacation.message.translation.patch
+- modified smeserver-vacation-1.1.bz8772.Add in po files.vacation.message.translation.patch
 
 * Thu Jul 14 2016 stephane de Labrusse <stephdl@de-labrusse.fr> 1.1-19.sme
 - corrected the object email issue [SME: 8772]
-- modified smeserver-vacation-1.1.bz8772.fix.vacation.message.translation.patch
+- modified smeserver-vacation-1.1.bz8772.Add in po files.vacation.message.translation.patch
 
 * Sun Jul 10 2016 stephane de Labrusse <stephdl@de-labrusse.fr> 1.1-17.sme
 - Fixed the auto enabled and disable vacation message [SME: 9661]
-- Added smeserver-vacation-1.1.bz9661.fix_auto_enable_disable_vacation.patch
+- Added smeserver-vacation-1.1.bz9661.Add in po files_auto_enable_disable_vacation.patch
 - Fixed the translation of the vacation message [SME: 8772]
-- Added smeserver-vacation-1.1.bz8772.fix.vacation.message.translation.patch
+- Added smeserver-vacation-1.1.bz8772.Add in po files.vacation.message.translation.patch
 
 * Wed Jul 06 2016 stephane de Labrusse <stephdl@de-labrusse.fr> 1.1-15.sme
 - Add translation smeserver-vacation-1.1-locale-2016-07-07.patch
@@ -269,7 +274,7 @@ enable vacation for themselves and to modify their own message
 - prepare en lexicons for pootle translations
 
 * Wed Dec 26 2007 Stephen Noble <support@dungog.net> 1.0-14
-- fix spanish translation
+- Add in po files spanish translation
 
 * Mon Oct 29 2007 Stephen Noble <support@dungog.net> 1.0-13
 - add spanish translation, thanks Normando Hall [SME 3503]
@@ -290,8 +295,8 @@ enable vacation for themselves and to modify their own message
 
 * Mon Oct 30 2006  Stephen Noble <support@dungog.net>
 - display description unshaded *
-- german lexicon fix
-- cosmetic log error fixed [sme 1992]
+- german lexicon Add in po files
+- cosmetic log error Add in po filesed [sme 1992]
 - [1.0-10]
 
 * Thu Aug 24 2006 Stephen Noble <support@dungog.net>
@@ -368,7 +373,7 @@ enable vacation for themselves and to modify their own message
 * Wed Nov 14 2001 Daniel van Raay <danielvr@caa.org.au>
   Tue Nov 14 2001 --> Tue Nov 13 2001 or Wed Nov 14 2001 or Tue Nov 20 2001 or ....
 - [0.2-2]
-- fixed bug in vacation script that delivered multiple bounces to users
+- Add in po filesed bug in vacation script that delivered multiple bounces to users
 
 * Tue Sep 04 2001 Daniel van Raay <danielvr@caa.org.au>
 - [0.2-1]
@@ -384,6 +389,25 @@ enable vacation for themselves and to modify their own message
 
 %build
 perl createlinks
+# And compile the po files for easy interpretation by I18N in server manager
+for potfile in root/usr/share/smanager/lib/SrvMngr/I18N/po/*/*.pot;
+do
+    #echo "potfile:"$potfile
+    moddir=$(dirname "$potfile")
+    module=$(basename "$potfile" .pot)
+	moduleLC=$(echo "$module" | tr 'A-Z' 'a-z')
+    #echo "moddir:"$moddir" module:"$module" moduleLC:"$moduleLC
+    for pofile in $moddir/*.po; do
+        [ -e "$pofile" ] || continue
+        echo "pofile:"${pofile}
+        lang=$(basename "$pofile" .po)
+        #echo "lang:"$lang
+        install -d "${moddir}/${lang}/LC_MESSAGES"
+        #mkdir -p "${moddir}/${lang}/LC_MESSAGES"
+        msgfmt --check -o "${moddir}/${lang}/LC_MESSAGES/${moduleLC}.mo" "$pofile"
+        echo "module:"$(find "${moddir}/${lang}" -name '*.mo')
+    done
+done
 
 %install
 rm -rf $RPM_BUILD_ROOT
